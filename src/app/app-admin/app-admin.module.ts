@@ -1,14 +1,19 @@
 import { NgModule } from '@angular/core';
+import {CommonModule} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AppAdminComponent } from './app-admin.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
-import { AddEmployeeComponent } from './add-employee/add-employee.component';
-import { AddMenuComponent } from './add-menu/add-menu.component';
+import { EmployeeComponent } from './employee/employee.component';
+import { MenuComponent } from './menu/menu.component';
+import { AddMenuComponent } from './menu/add-menu/add-menu.component';
+
 
 @NgModule({
-	imports: [FormsModule],
+	imports: [FormsModule, CommonModule, NgbModule],
 	exports: [],
-	declarations: [AppAdminComponent, AddEmployeeComponent, AddMenuComponent],
+	declarations: [AppAdminComponent, EmployeeComponent, MenuComponent,  AddMenuComponent],
+	entryComponents : [ AddMenuComponent],
 	providers: [],
 })
 export class AppAdminModule { }

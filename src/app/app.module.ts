@@ -12,6 +12,7 @@ import {AppRoutingModule } from './app.routing.module'
 import { AppLoginComponent } from './app-login/app-login.component'
 import { AppService } from "./services/app.service"
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component"
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap/modal/modal-ref';
 
 
 @NgModule({

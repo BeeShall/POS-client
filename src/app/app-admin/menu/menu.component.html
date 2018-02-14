@@ -1,35 +1,25 @@
+<div>
+	<span>Search</span>
+	<input type="text">
+	<button class="btn btn-lg btn-outline-primary" (click)="openAddMenu()">Launch demo modal</button>
+</div>
 <table class="table table-hover table-responsive">
 	<thead>
 	  <tr>
-		<th>Prefix</th>
-		<th>First Name</th>
-		<th>Last Name</th>
-		<th>Street</th>
-		<th>City</th>
-		<th>State</th>
-		<th>Zip</th>
-		<th>Phone</th>
-		<th>Email</th>
-		<th>Contact By Mail</th>
-		<th>Contact By Email</th>
-		<th>Contact By Phone</th>
+		<th>Name</th>
+		<th>Description</th>
+		<th>MenuType</th>
+		<th>Sub-section</th>
+		<th>Price</th>
 	  </tr>
 	</thead>
 	<tbody>
-	  <tr ng-repeat="contact in records | filter: Filter | filter: coordsFilter" ng-click="reCenter(contact.coords)">
-		<td>{{contact.prefix}}</td>
-		<td>{{contact.fName}}</td>
-		<td>{{contact.lName}}</td>
-		<td>{{contact.street}}</td>
-		<td>{{contact.city}}</td>
-		<td>{{contact.state}}</td>
-		<td>{{contact.zip}}</td>
-		<td>{{contact.phone}}</td>
-		<td>{{contact.email}}</td>
-		<td>{{contact.contactByMail}} </td>
-		<td>{{contact.contactByEmail}}</td>
-		<td>{{contact.contactByPhone}}</td>
-		<td> </td>
+	  <tr *ngFor = "let menu of menus">
+		<td >{{menu.name}}</td>
+		<td>{{menu.description}}</td>
+		<td>{{menu.menutype}}</td>
+		<td>{{menu.menuSection}}</td>
+		<td><button>View Details</button></td>
 	  </tr>
 	</tbody>
   </table>

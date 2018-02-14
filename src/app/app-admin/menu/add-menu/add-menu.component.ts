@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
 	selector: 'add-menu',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class AddMenuComponent implements OnInit {
-	constructor() { }
+	constructor(public activeModal: NgbActiveModal) { }
 
 	ngOnInit() { }
 }
