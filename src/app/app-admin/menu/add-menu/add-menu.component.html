@@ -1,12 +1,54 @@
 <div class="modal-header">
-	<h4 class="modal-title">Hi there!</h4>
-	<button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-		<span aria-hidden="true">&times;</span>
-	</button>
+  <h4 class="modal-title">Hi there!</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
 </div>
 <div class="modal-body">
-	<p>Hello, {{name}}!</p>
-</div>
-<div class="modal-footer">
-	<button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+  <div class="container">
+    <div id="pwd-container" class="row">
+      <form #addMenuForm="ngForm" (ngSubmit)="submit(addMenuForm)" role="addMenu">
+        <div class="form-group row">
+          <label for="name">Name: </label>
+          <input type="text" name="name" id="price" placeholder="Name" required class="form-control input-lg" ngModel>
+        </div>
+
+        <div class="form-group row">
+          <label for="desc">Description: </label>
+          <input type="text" name="description" id="desc" placeholder="Name" required class="form-control input-lg" ngModel>
+        </div>
+
+        <div class="form-group row">
+          <label for="ingredient">Ingredients: </label>
+          <input type="text" name="ingredient" id="ingredient" placeholder="Add an ingredient" class="form-control input-lg" [(ngModel)]="ingredient">
+          <button type="button" class="btn btn-small" (click)="ingredients.push(ingredient)">Add</button>
+        </div>
+        <ul>
+          <li *ngFor="let ing of ingredients">{{ing}}</li>
+        </ul>
+        <div class="form-group row">
+          <label for="menuType">Menu Type:</label>
+          <input type="text" name="menuType" id="menuType" class="form-control input-lg" list="menuTypes" ngModel>
+          <datalist id="menuTypes">
+            <option *ngFor="let mt of menuTypes"> {{mt}}</option>
+					</datalist>
+        </div>
+        <div class="form-group row">
+          <label for="menuSection">MenuSection: </label>
+          <input type="text" name="menuSection" id="menuSection" class="form-control input-lg" ngModel>
+        </div>
+
+        <div class="form-group row">
+          <label for="price">Price: </label>
+          <input type="number" min="0.00" max="10000.00" step="0.01" name="price" id="price" placeholder="price" required class="form-control input-lg"
+            ngModel/>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" name="go" class="btn btn-lg btn-primary btn-block" class="close">Add</button>
+          <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

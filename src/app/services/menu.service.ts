@@ -15,13 +15,13 @@ export class MenuService {
 
 	constructor(private http: Http) { }
 	
-	getAllMenu(data) : Observable<Menu>{
+	getAllMenu() : Observable<Menu>{
 		return this.http.get(this.apiUrl+"getAllMenu", this.options)
 			.map((res:Response) => res.json());
 	}
 
 	addMenu(menu:Menu) : Observable<Menu>{
-		return this.http.post(this.apiUrl+"admin/addMenu", menu, this.options)
+		return this.http.post(this.apiUrl+"addMenu", menu, this.options)
 			.map((res:Response) => res.json());
 	}
 }
