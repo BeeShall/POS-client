@@ -1,6 +1,8 @@
 import {Nutrition} from "./nutrition"
 
-export enum MenuType{'APPETIZER', 'ENTREE', 'DRINK', 'DESSERT'};
+let MenuType :string[] = ["APPETIZER", "ENTREE", "DRINK", "DESSERT"];
+
+export default MenuType;
 
 export class Menu{
 	menuId:string;
@@ -8,7 +10,7 @@ export class Menu{
 	price: number;
 	description: string;
 	ingredients: string[];
-	menutype : MenuType;
+	menutype : string;
 	menuSection: string;
 	nutrition: Nutrition
 }

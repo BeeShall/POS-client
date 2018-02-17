@@ -10,7 +10,7 @@
       <form #addMenuForm="ngForm" (ngSubmit)="submit(addMenuForm)" role="addMenu">
         <div class="form-group row">
           <label for="name">Name: </label>
-          <input type="text" name="name" id="price" placeholder="Name" required class="form-control input-lg" ngModel>
+          <input type="text" name="name" id="name" placeholder="Name" required class="form-control input-lg" ngModel>
         </div>
 
         <div class="form-group row">
@@ -28,7 +28,7 @@
         </ul>
         <div class="form-group row">
           <label for="menuType">Menu Type:</label>
-          <input type="text" name="menuType" id="menuType" class="form-control input-lg" list="menuTypes" ngModel>
+          <input type="text" name="menutype" id="menutype" class="form-control input-lg" list="menuTypes" ngModel>
           <datalist id="menuTypes">
             <option *ngFor="let mt of menuTypes"> {{mt}}</option>
 					</datalist>

@@ -19,7 +19,9 @@
 		<td>{{menu.description}}</td>
 		<td>{{menu.menutype}}</td>
 		<td>{{menu.menuSection}}</td>
-		<td><button>View Details</button></td>
+		<td>{{menu.price}}</td>
+		<td><button (click)="viewDetails(menu)">View Details/Edit</button></td>
+		<td><button (click)="delete(menu)">Delete</button></td>
 	  </tr>
 	</tbody>
   </table>

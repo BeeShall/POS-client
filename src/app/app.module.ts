@@ -12,6 +12,7 @@ import {AppRoutingModule } from './app.routing.module'
 import { AppLoginComponent } from './app-login/app-login.component'
 import { AppService } from "./services/app.service"
 import {MenuService} from "./services/menu.service"
+import {EmployeeService} from "./services/employee.service"
 
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component"
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap/modal/modal-ref';
@@ -29,7 +30,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap/modal/modal-ref';
     AppAdminModule,
     NgbModule.forRoot()
   ],
-  providers: [AppService, MenuService],
+  providers: [AppService, MenuService, EmployeeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

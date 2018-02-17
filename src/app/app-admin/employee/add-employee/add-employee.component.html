@@ -1,0 +1,38 @@
+<div class="modal-header">
+  <h4 class="modal-title">Hi there!</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="container">
+    <div id="pwd-container" class="row">
+      <form #addEmployeeForm="ngForm" (ngSubmit)="submit(addEmployeeForm)" role="addEmployee">
+        <div class="form-group row">
+          <label for="fName">First Name: </label>
+          <input type="text" name="fName" id="fName" placeholder="First Name" required class="form-control input-lg" ngModel>
+        </div>
+        
+        <div class="form-group row">
+            <label for="lName">Last Name: </label>
+            <input type="text" name="lName" id="lName" placeholder="Last Name" required class="form-control input-lg" ngModel>
+          </div>
+
+        <div class="form-group row">
+          <label for="address">Address: </label>
+          <input type="text" name="address" id="address" placeholder="address" required class="form-control input-lg" ngModel>
+        </div>
+
+        <div class="form-group row">
+          <label for="address">Phone: </label>
+          <input type="text" name="phone" id="phone" placeholder="phone" required class="form-control input-lg" ngModel>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" name="go" class="btn btn-lg btn-primary btn-block" class="close">Add</button>
+          <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

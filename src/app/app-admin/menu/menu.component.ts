@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
-import {Menu, MenuType} from '../../dataModels/menu'
+import {Menu} from '../../dataModels/menu'
 import {AddMenuComponent} from './add-menu/add-menu.component'
 import {MenuService} from '../../services/menu.service'
 
@@ -29,5 +29,6 @@ export class MenuComponent implements OnInit {
 
 	openAddMenu() {
 		const modalRef = this.modalService.open(AddMenuComponent);
+		modalRef.componentInstance.menus = this.menus;
 	  }
 }
