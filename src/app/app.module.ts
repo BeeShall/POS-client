@@ -16,6 +16,7 @@ import {EmployeeService} from "./services/employee.service"
 
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component"
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap/modal/modal-ref';
+import { AppGuestModule } from './app-guest/app-guest.modules';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap/modal/modal-ref';
     AppRoutingModule,
     FormsModule,
     AppAdminModule,
+    AppGuestModule,
     NgbModule.forRoot()
   ],
   providers: [AppService, MenuService, EmployeeService],

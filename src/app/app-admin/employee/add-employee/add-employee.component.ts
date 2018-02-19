@@ -15,24 +15,49 @@ export class AddEmployeeComponent implements OnInit {
 	@Input()
 	employees: Employee[];
 
+	@Input()
+	newAdd: boolean;
+
+	@Input()
+	employee: Employee;
+
 	constructor(public activeModal: NgbActiveModal,
 		private employeeService: EmployeeService) { }
 
-	ngOnInit() { }
+	ngOnInit() {
+		if (this.newAdd) {
+			this.employee = new Employee();
+		}
+	}
 
-	submit(addEmployeeForm: NgForm) {
-		let employee: Employee = addEmployeeForm.value;
-		this.employeeService.addEmployee(addEmployeeForm.value)
-			.subscribe(data => {
-				if (data["success"]) {
-					console.log("Employee added")
-					employee.username = data["username"]
-					this.employees.push(employee);
-				}
-				else {
-					console.log("Error adding employee!")
-				}
-			})
-		this.activeModal.close('Close click');
+	submit() {
+		if (this.newAdd) {
+			this.employeeService.addEmployee(this.employee)
+				.subscribe(data => {
+					if (data["success"]) {
+						console.log("Employee added")
+						this.employee.username = data["username"]
+						this.employees.push(this.employee);
+						this.activeModal.close('Close click');
+					}
+					else {
+						console.log("Error adding employee!")
+					}
+				})
+		}
+		else{
+			console.log(this.employee)
+			this.employeeService.updateEmployee(this.employee)
+				.subscribe(data => {
+					if (data["success"]) {
+						console.log("Employee updated");
+						this.activeModal.close('Close click');
+					}
+					else {
+						console.log("Error updating employee!")
+					}
+				})
+		}
+
 	}
 }

@@ -9,19 +9,17 @@
 		<th>Name</th>
 		<th>Description</th>
 		<th>MenuType</th>
-		<th>Sub-section</th>
 		<th>Price</th>
 	  </tr>
 	</thead>
 	<tbody>
-	  <tr *ngFor = "let menu of menus">
+	  <tr *ngFor = "let menu of menus; let i = index;">
 		<td >{{menu.name}}</td>
 		<td>{{menu.description}}</td>
 		<td>{{menu.menutype}}</td>
-		<td>{{menu.menuSection}}</td>
 		<td>{{menu.price}}</td>
 		<td><button (click)="viewDetails(menu)">View Details/Edit</button></td>
-		<td><button (click)="delete(menu)">Delete</button></td>
+		<td><button (click)="delete(menu.menuId, i)">Delete</button></td>
 	  </tr>
 	</tbody>
   </table>

@@ -24,4 +24,16 @@ export class MenuService {
 		return this.http.post(this.apiUrl+"addMenu", menu, this.options)
 			.map((res:Response) => res.json());
 	}
+
+	updateMenu(menu:Menu) : Observable<Menu>{
+		return this.http.post(this.apiUrl+"updateMenu", menu, this.options)
+			.map((res:Response) => res.json());
+	}
+
+	daleteMenu(id:string) : Observable<Menu>{
+		return this.http.delete(this.apiUrl+"deleteMenu/"+id, this.options)
+			.map((res:Response) => res.json());
+	}
+
+	
 }

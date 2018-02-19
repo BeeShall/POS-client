@@ -28,7 +28,26 @@ export class MenuComponent implements OnInit {
 	 }
 
 	openAddMenu() {
-		const modalRef = this.modalService.open(AddMenuComponent);
+		const modalRef = this.modalService.open(AddMenuComponent,{ size: "lg"});
 		modalRef.componentInstance.menus = this.menus;
+		modalRef.componentInstance.newAdd = true;
+	  }
+
+	  viewDetails(menu){
+		const modalRef = this.modalService.open(AddMenuComponent,{ size: "lg"});
+		modalRef.componentInstance.menu = menu;
+		modalRef.componentInstance.newAdd = false;
+	  }
+
+	  delete(menuId, index){
+		  this.menuService.daleteMenu(menuId).subscribe(data=>{
+			  if(data["success"]){
+				  console.log("Menu successfully deleted")
+				  this.menus.splice(index, 1);
+			  }
+			  else{
+				  console.log("Unable to delete the menu")
+			  }
+		  })
 	  }
 }

@@ -7,29 +7,29 @@
 <div class="modal-body">
   <div class="container">
     <div id="pwd-container" class="row">
-      <form #addEmployeeForm="ngForm" (ngSubmit)="submit(addEmployeeForm)" role="addEmployee">
+      <form #addEmployeeForm="ngForm" (ngSubmit)="submit()" role="addEmployee" ngNativeValidate>
         <div class="form-group row">
           <label for="fName">First Name: </label>
-          <input type="text" name="fName" id="fName" placeholder="First Name" required class="form-control input-lg" ngModel>
+          <input type="text" name="employee.fName" id="fName" placeholder="First Name" required class="form-control input-lg" [(ngModel)]="employee.fName">
         </div>
         
         <div class="form-group row">
             <label for="lName">Last Name: </label>
-            <input type="text" name="lName" id="lName" placeholder="Last Name" required class="form-control input-lg" ngModel>
+            <input type="text" name="employee.lName" id="lName" placeholder="Last Name" required class="form-control input-lg" [(ngModel)]="employee.lName">
           </div>
 
         <div class="form-group row">
           <label for="address">Address: </label>
-          <input type="text" name="address" id="address" placeholder="address" required class="form-control input-lg" ngModel>
+          <input type="text" name="employee.address" id="address" placeholder="address" required class="form-control input-lg" [(ngModel)]="employee.address">
         </div>
 
         <div class="form-group row">
           <label for="address">Phone: </label>
-          <input type="text" name="phone" id="phone" placeholder="phone" required class="form-control input-lg" ngModel>
+          <input type="text" name="employee.phone" id="phone" placeholder="phone" required class="form-control input-lg" [(ngModel)]="employee.phone">
         </div>
 
         <div class="modal-footer">
-          <button type="submit" name="go" class="btn btn-lg btn-primary btn-block" class="close">Add</button>
+          <button type="submit" name="go" class="btn btn-outline-primary" >{{newAdd?"Add":"Update"}}</button>
           <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
         </div>
       </form>

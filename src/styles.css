@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+.modal-body{
+	margin-left: 5em;
+	margin-right: 5em;
+}
+
+body{
+	margin-left: 5em;
+	margin-right: 5em;
+}

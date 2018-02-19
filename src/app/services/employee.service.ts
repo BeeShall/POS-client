@@ -24,4 +24,14 @@ export class EmployeeService {
 		return this.http.post(this.apiUrl+"addEmployee", employee, this.options)
 			.map((res:Response) => res.json());
 	}
+
+	updateEmployee(employee:Employee) : Observable<Employee>{
+		return this.http.post(this.apiUrl+"updateEmployee", employee, this.options)
+			.map((res:Response) => res.json());
+	}
+
+	deleteEmployee(id:string) : Observable<Employee>{
+		return this.http.delete(this.apiUrl+"deleteEmployee/"+id, this.options)
+			.map((res:Response) => res.json());
+	}
 }

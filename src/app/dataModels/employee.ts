@@ -5,6 +5,3 @@ export class Employee{
 	address:string;
 	phone:string;
 }
-
-
-export default Position;

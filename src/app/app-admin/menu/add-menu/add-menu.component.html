@@ -7,45 +7,139 @@
 <div class="modal-body">
   <div class="container">
     <div id="pwd-container" class="row">
-      <form #addMenuForm="ngForm" (ngSubmit)="submit(addMenuForm)" role="addMenu">
+      <form #addMenuForm="ngForm" (ngSubmit)="submit(addMenuForm)" role="addMenu" ngNativeValidate>
         <div class="form-group row">
           <label for="name">Name: </label>
-          <input type="text" name="name" id="name" placeholder="Name" required class="form-control input-lg" ngModel>
+          <input type="text" name="menu.name" id="name" placeholder="Name" class="form-control input-lg" [(ngModel)]="menu.name">
         </div>
 
         <div class="form-group row">
           <label for="desc">Description: </label>
-          <input type="text" name="description" id="desc" placeholder="Name" required class="form-control input-lg" ngModel>
+          <input type="text" name="menu.description" id="desc" placeholder="Name" class="form-control input-lg" [(ngModel)]="menu.description">
         </div>
 
         <div class="form-group row">
           <label for="ingredient">Ingredients: </label>
-          <input type="text" name="ingredient" id="ingredient" placeholder="Add an ingredient" class="form-control input-lg" [(ngModel)]="ingredient">
-          <button type="button" class="btn btn-small" (click)="ingredients.push(ingredient)">Add</button>
+          <input type="text" name="menu.ingredients" id="ingredient" placeholder="Add an ingredient" class="form-control input-lg"
+            [(ngModel)]="ingredient">
+          <button type="button" class="btn btn-small" (click)="menu.ingredients.push(ingredient)">Add</button>
         </div>
         <ul>
-          <li *ngFor="let ing of ingredients">{{ing}}</li>
+          <li *ngFor="let ing of menu.ingredients">{{ing}}</li>
         </ul>
         <div class="form-group row">
           <label for="menuType">Menu Type:</label>
-          <input type="text" name="menutype" id="menutype" class="form-control input-lg" list="menuTypes" ngModel>
+          <input type="text" name="menu.menutype" id="menutype" class="form-control input-lg" list="menuTypes" [(ngModel)]="menu.menutype">
           <datalist id="menuTypes">
             <option *ngFor="let mt of menuTypes"> {{mt}}</option>
-					</datalist>
-        </div>
-        <div class="form-group row">
-          <label for="menuSection">MenuSection: </label>
-          <input type="text" name="menuSection" id="menuSection" class="form-control input-lg" ngModel>
+          </datalist>
         </div>
 
         <div class="form-group row">
           <label for="price">Price: </label>
-          <input type="number" min="0.00" max="10000.00" step="0.01" name="price" id="price" placeholder="price" required class="form-control input-lg"
-            ngModel/>
+          <input type="number" min="0.00" max="10000.00" step="0.01" name="menu.price" id="price" placeholder="price" class="form-control col-sm-2"
+            [(ngModel)]="menu.price" />
         </div>
 
+        <hr>
+
+        <h1>Nutritional Information</h1>
+        <div ngModelGroup="nutrition">
+          <div class="form-group row">
+            <label for="calories">Calories: </label>
+            <input type="number" name="menu.nutrition.calories" id="calories" class="form-control form-control-sm col-sm-2" [(ngModel)]="menu.nutrition.calories">
+          </div>
+
+          <div ngModelGroup="fat">
+            <div class="form-group row">
+              <label for="fat">Fat: </label>
+              <input type="number" name="menu.nutrition.fat.fat" id="fat" class="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.fat.fat">
+              <span>g</span>
+            </div>
+            <div class="form-group row">
+              <div>
+                <label for="satFat">Saturated Fat: </label>
+                <input type="number" name="menu.nutrition.fat.satFat" id="satFat" class="form-control  form-control-sm col-sm-4 d-inline"
+                  [(ngModel)]="menu.nutrition.fat.satFat">
+                <span>g</span>
+              </div>
+              <div>
+                <label for="unsatFat">Unsaturated Fat: </label>
+                <input type="number" name="menu.nutrition.fat.unsatFat" id="unsatFat" class="form-control form-control-sm col-sm-4 d-inline"
+                  [(ngModel)]="menu.nutrition.fat.unsatFat">
+                <span>g</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="cholestrol">Cholestrol: </label>
+            <input type="number" name="menu.nutrition.cholestrol" id="cholestrol" placeholder="Cholestrol" class="form-control form-control-sm col-sm-2"
+              [(ngModel)]="menu.nutrition.cholestrol" />
+            <span>mg</span>
+          </div>
+
+          <div class="form-group row">
+            <label for="sodium">Sodium: </label>
+            <input type="number" name="menu.nutrition.sodium" id="sodium" placeholder="Sodium" class="form-control form-control-sm col-sm-2"
+              [(ngModel)]="menu.nutrition.sodium" />
+            <span>mg</span>
+          </div>
+
+          <div ngModelGroup="carbs">
+            <div class="form-group row">
+              <label for="carbs">Carbohydrates: </label>
+              <input type="number" name="carbs" id="carbs" class="form-control form-control-sm col-sm-2" [(ngModel)]="menu.nutrition.carbs.carbs">
+              <span>g</span>
+            </div>
+            <div class="form-group row">
+              <div>
+                <label for="sugar">Sugar: </label>
+                <input type="number" name="sugar" id="sugar" class="form-control form-control-sm col-sm-4 d-inline" [(ngModel)]="menu.nutrition.carbs.sugar">
+                <span>g</span>
+              </div>
+              <div>
+                <label for="fiber">Dietary Fiber: </label>
+                <input type="number" name="fiber" id="fiber" class="form-control form-control-sm col-sm-4 d-inline" [(ngModel)]="menu.nutrition.carbs.fiber">
+                <span>g</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+              <label for="protein">Protein: </label>
+              <input type="number" min="0" max="100" name="protein" id="proteein" placeholder="Protein" class="form-control form-control-sm col-sm-2"
+                [(ngModel)]="menu.nutrition.protein" />g
+            </div>
+
+          <div ngModelGroup="vitamin" class="form-group row">
+            <div>
+              <label for="vita">Vitamin A: </label>
+              <input type="number" min="0" max="100" name="vita" id="vita" class="form-control form-control-sm col-sm-4 d-inline" [(ngModel)]="menu.nutrition.vitamin.vita">%
+            </div>
+            <div>
+              <label for="vitc">Vitamin C: </label>
+              <input type="number" min="0" max="100" name="vitc" id="vitc" class="form-control form-control-sm col-sm-4 d-inline" [(ngModel)]="menu.nutrition.vitamin.vitc">%
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="calcium">Calcium: </label>
+            <input type="number" min="0" max="100" name="calcium" id="calcium" placeholder="Calcium" class="form-control form-control-sm col-sm-2"
+              [(ngModel)]="menu.nutrition.calcium" />%
+          </div>
+
+          <div class="form-group row">
+            <label for="iron">Iron: </label>
+            <input type="number" min="0" max="100" name="iron" id="iron" placeholder="Iron" class="form-control form-control-sm col-sm-2"
+              [(ngModel)]="menu.nutrition.iron" />%
+          </div>
+        </div>
+
+
+
         <div class="modal-footer">
-          <button type="submit" name="go" class="btn btn-lg btn-primary btn-block" class="close">Add</button>
+          <button type="submit" name="go" class="btn btn-outline-primary">{{newAdd?"Add":"Update"}}</button>
           <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
         </div>
       </form>

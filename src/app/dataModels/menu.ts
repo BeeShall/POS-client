@@ -9,8 +9,7 @@ export class Menu{
 	name:string;
 	price: number;
 	description: string;
-	ingredients: string[];
+	ingredients: string[] = [];
 	menutype : string;
-	menuSection: string;
-	nutrition: Nutrition
+	nutrition: Nutrition = new Nutrition()
 }
