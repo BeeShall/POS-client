@@ -10,13 +10,7 @@ body {
   width: 100%;
 }
 
-.performance-facts__table th, .performance-facts__table--small th, .performance-facts__table--grid th, .performance-facts__table td, .performance-facts__table--small td, .performance-facts__table--grid td {
-  font-weight: normal;
-  text-align: left;
-  padding: 0.25rem 0;
-  border-top: 1px solid black;
-  white-space: nowrap;
-}
+
 .performance-facts__table td:last-child, .performance-facts__table--small td:last-child, .performance-facts__table--grid td:last-child {
   text-align: right;
 }
@@ -28,24 +22,11 @@ body {
   border-top-width: 5px;
 }
 
-.performance-facts__table--small {
-  border-bottom: 1px solid #999;
-  margin: 0 0 0.5rem 0;
-}
-.performance-facts__table--small thead tr {
-  border-bottom: 1px solid black;
-}
+
 .performance-facts__table--small td:last-child {
   text-align: left;
 }
-.performance-facts__table--small th, .performance-facts__table--small td {
-  border: 0;
-  padding: 0;
-}
 
-.performance-facts__table--grid {
-  margin: 0 0 0.5rem 0;
-}
 .performance-facts__table--grid td:last-child {
   text-align: left;
 }
@@ -55,14 +36,7 @@ body {
   margin: 0 0.25rem 0 0;
 }
 
-.text-center {
-  text-align: center;
-}
-
 .thick-end {
   border-bottom: 10px solid black;
 }
 
-.thin-end {
-  border-bottom: 1px solid black;
-}

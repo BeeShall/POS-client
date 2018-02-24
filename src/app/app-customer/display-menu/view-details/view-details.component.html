@@ -1,0 +1,234 @@
+<div class="modal-header">
+  <h4 class="modal-title">Hi there!</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body m-0">
+
+  <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+    <ngb-panel title="Menu Details" class="m-0">
+      <ng-template ngbPanelContent>
+        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute,
+        non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt
+        aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
+        craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+        occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+        labore sustainable VHS.
+      </ng-template>
+    </ngb-panel>
+    <ngb-panel title="Nutritional Information" class="m-0 p-0">
+      <ng-template ngbPanelContent class="m-0 p-0">
+        <section class=" border m-0 p-2">
+          <header class="h1">Nutrition Facts
+          </header>
+          <table class="performance-facts__table small">
+            <tbody>
+              <tr>
+                <th colspan="2" class="border-top font-weight-normal text-nowrap">
+                  <b>Calories</b>
+                  {{menu.nutrition.calories}}
+                </th>
+                <td class="border-top font-weight-normal text-nowrap">
+                  Calories from Fat 130
+                </td>
+              </tr>
+              <tr class="thick-row">
+                <td colspan="3" class="small">
+                  <b>% Daily Value*</b>
+                </td>
+              </tr>
+              <tr>
+                <th colspan="2" class="border-top font-weight-normal text-nowrap">
+                  <b>Total Fat</b>
+                  {{menu.nutrition.fat.fat}}g
+                </th>
+                <td class="border-top font-weight-normal text-nowrap">
+                  <b>22%</b>
+                </td>
+              </tr>
+              <tr>
+                <td class="blank-cell">
+                </td>
+                <th class="border-top font-weight-normal text-nowrap">
+                  Saturated Fat {{menu.nutrition.fat.satFat}}g
+                </th>
+                <td class="border-top font-weight-normal text-nowrap">
+                  <b>22%</b>
+                </td>
+              </tr>
+              <tr>
+                <td class="blank-cell">
+                </td>
+                <th class="border-top font-weight-normal text-nowrap">
+                  Unsaturated Fat {{menu.nutrition.fat.unsatFat}}g
+                </th>
+                <td class="border-top font-weight-normal text-nowrap">
+                </td>
+              </tr>
+              <tr>
+                <td class="blank-cell">
+                </td>
+                <th class="border-top font-weight-normal text-nowrap">
+                  Trans Fat {{menu.nutrition.fat.transFat}}g
+                </th>
+                <td class="border-top font-weight-normal text-nowrap">
+                </td>
+              </tr>
+              <tr>
+                <th colspan="2" class="border-top font-weight-normal text-nowrap">
+                  <b>Cholesterol</b>
+                  {{menu.nutrition.cholestrol}}mg
+                </th>
+                <td class="border-top font-weight-normal text-nowrap">
+                  <b>18%</b>
+                </td>
+              </tr>
+              <tr>
+                <th colspan="2" class="border-top font-weight-normal text-nowrap">
+                  <b>Sodium</b>
+                  {{menu.nutrition.sodium}}mg
+                </th>
+                <td class="border-top font-weight-normal text-nowrap">
+                  <b>2%</b>
+                </td>
+              </tr>
+              <tr>
+                <th colspan="2" class="border-top font-weight-normal text-nowrap">
+                  <b>Total Carbohydrate</b>
+                  {{menu.nutrition.carbs.carbs}}g
+                </th>
+                <td class="border-top font-weight-normal text-nowrap">
+                  <b>6%</b>
+                </td>
+              </tr>
+              <tr>
+                <td class="blank-cell">
+                </td>
+                <th class="border-top font-weight-normal text-nowrap">
+                  Dietary Fiber {{menu.nutrition.carbs.fiber}}g
+                </th>
+                <td class="border-top font-weight-normal text-nowrap">
+                  <b>4%</b>
+                </td>
+              </tr>
+              <tr>
+                <td class="blank-cell">
+                </td>
+                <th class="border-top font-weight-normal text-nowrap">
+                  Sugars {{menu.nutrition.carbs.sugar}}g
+                </th>
+                <td class="border-top font-weight-normal text-nowrap">
+                </td>
+              </tr>
+              <tr class="thick-end">
+                <th colspan="2" class="border-top font-weight-normal text-nowrap">
+                  <b>Protein</b>
+                  {{menu.nutrition.protein}}g
+                </th>
+                <td class="border-top font-weight-normal text-nowrap">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table class="performance-facts__table--grid small">
+            <tbody>
+              <tr>
+                <td colspan="2" class="border-top font-weight-normal text-nowrap">
+                  Vitamin A {{menu.nutrition.vitamin.vita}}%
+                </td>
+                <td class="border-top font-weight-normal text-nowrap">
+                  Vitamin C {{menu.nutrition.vitamin.vitc}}%
+                </td>
+              </tr>
+              <tr class="border-bottom">
+                <td colspan="2" class="border-top font-weight-normal text-nowrap">
+                  Calcium {{menu.nutrition.calcium}}%
+                </td>
+                <td class="border-top font-weight-normal text-nowrap">
+                  Iron {{menu.nutrition.iron}}%
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="small">* Percent Daily Values are based on a 2,000 calorie diet. Your daily values may be higher or lower depending on
+            your calorie needs:</p>
+
+          <table class="performance-facts__table--small small border-bottom">
+            <thead>
+              <tr>
+                <td colspan="2" class="border-top font-weight-normal text-nowrap"></td>
+                <th class="border-top font-weight-normal text-nowrap">Calories:</th>
+                <th class="border-top font-weight-normal text-nowrap">2,000</th>
+                <th class="border-top font-weight-normal text-nowrap">2,500</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th colspan="2" class="border-top font-weight-normal text-nowrap">Total Fat</th>
+                <td class="border-top font-weight-normal text-nowrap">Less than</td>
+                <td class="border-top font-weight-normal text-nowrap">65g</td>
+                <td class="border-top font-weight-normal text-nowrap">80g</td>
+              </tr>
+              <tr>
+                <td class="blank-cell"></td>
+                <th class="border-top font-weight-normal text-nowrap">Saturated Fat</th>
+                <td class="border-top font-weight-normal text-nowrap">Less than</td>
+                <td class="border-top font-weight-normal text-nowrap">20g</td>
+                <td class="border-top font-weight-normal text-nowrap">25g</td>
+              </tr>
+              <tr>
+                <th colspan="2" class="border-top font-weight-normal text-nowrap">Cholesterol</th>
+                <td class="border-top font-weight-normal text-nowrap">Less than</td>
+                <td class="border-top font-weight-normal text-nowrap">300mg</td>
+                <td class="border-top font-weight-normal text-nowrap">300 mg</td>
+              </tr>
+              <tr>
+                <th colspan="2" class="border-top font-weight-normal text-nowrap">Sodium</th>
+                <td class="border-top font-weight-normal text-nowrap">Less than</td>
+                <td class="border-top font-weight-normal text-nowrap">2,400mg</td>
+                <td class="border-top font-weight-normal text-nowrap">2,400mg</td>
+              </tr>
+              <tr>
+                <th colspan="3" class="border-top font-weight-normal text-nowrap">Total Carbohydrate</th>
+                <td class="border-top font-weight-normal text-nowrap">300g</td>
+                <td class="border-top font-weight-normal text-nowrap">375g</td>
+              </tr>
+              <tr>
+                <td class="blank-cell"></td>
+                <th colspan="2" class="border-top font-weight-normal text-nowrap">Dietary Fiber</th>
+                <td class="border-top font-weight-normal text-nowrap">25g</td>
+                <td class="border-top font-weight-normal text-nowrap">30g</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="small">
+            Calories per gram:
+          </p>
+          <p class="small text-center">
+            Fat 9 &bull; Carbohydrate 4 &bull; Protein 4
+          </p>
+
+        </section>
+
+
+      </ng-template>
+    </ngb-panel>
+    <ngb-panel title="Reviews">
+      <ng-template ngbPanelContent>
+        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute,
+        non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt
+        aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
+        craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+        occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+        labore sustainable VHS.
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+</div>

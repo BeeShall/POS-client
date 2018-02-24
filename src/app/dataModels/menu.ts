@@ -1,15 +1,21 @@
-import {Nutrition} from "./nutrition"
+import { Nutrition } from "./nutrition"
 
-let MenuType :string[] = ["APPETIZER", "ENTREE", "DRINK", "DESSERT"];
+export let MenuType: string[] = ["PASTA A LA CARTE", "SAUCES", "ENTREES A LA CARTE", "SOUP & SALAD", "SANDWICHES", "SIDES", "DESSERTS", "BEVERAGES"];
 
-export default MenuType;
+export let SizeList: string[] = ["REGULAR", "SMALL", "LARGE"]
 
-export class Menu{
-	menuId:string;
-	name:string;
-	price: number;
+
+export class Menu {
+	menuId: string;
+	name: string;
+	prices: Price[] = [];
 	description: string;
 	ingredients: string[] = [];
-	menutype : string;
+	menutype: string;
 	nutrition: Nutrition = new Nutrition()
+}
+
+export class Price {
+	type: string;
+	price: number;
 }

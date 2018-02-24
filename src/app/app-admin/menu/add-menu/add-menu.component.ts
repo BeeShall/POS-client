@@ -1,8 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { Menu } from '../../../dataModels/menu';
-import MenuType from '../../../dataModels/menu';
+import { Menu, MenuType, SizeList } from '../../../dataModels/menu';
 import { MenuService } from '../../../services/menu.service'
 import { NgForm } from '@angular/forms';
 import { Nutrition } from '../../../dataModels/nutrition';
@@ -16,6 +15,7 @@ import { Nutrition } from '../../../dataModels/nutrition';
 export class AddMenuComponent implements OnInit {
 
 	menuTypes = MenuType;
+	sizeList = SizeList;
 
 	@Input()
 	menus: Menu[];

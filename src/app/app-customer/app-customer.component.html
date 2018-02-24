@@ -1,0 +1,13 @@
+<ngb-tabset>
+  <ngb-tab title="Menus">
+    <ng-template ngbTabContent>
+      <display-menu *ngIf="dispMenu" [dispMenu]="dispMenu" [pendingOrders]="pendingOrders"></display-menu>
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab title="Orders">
+    <ng-template ngbTabContent>
+      <orders *ngIf="activeOrders" [pendingOrders]="pendingOrders" [activeOrders]="activeOrders" ></orders>
+    </ng-template>
+  </ngb-tab>
+</ngb-tabset>
+
