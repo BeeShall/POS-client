@@ -42,7 +42,7 @@ export class DisplayMenuComponent implements OnInit {
 			"menu": menu,
 			"orderType": "SELF",
 			"quantity": parseInt(quantity),
-			"size": parseInt(priceIndex)
+			"size": (priceIndex) ? parseInt(priceIndex):0
 
 		});
 		console.log(this.pendingOrders)

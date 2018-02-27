@@ -31,7 +31,7 @@
                       </div>
                     </div>
 
-                    <small class="text-muted">$ {{ (quantity && priceIndex)? ( (menu.prices.length > 1)?menu.prices[priceIndex].price:menu.prices[0].price )* quantity : 0 }}</small>
+                    <small class="text-muted">$ {{ (quantity ) ? ((menu.prices.length > 1 && priceIndex) ? menu.prices[priceIndex].price :menu.prices[0].price) * quantity : 0 }}</small>
                   </div>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">

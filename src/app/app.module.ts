@@ -18,11 +18,12 @@ import { PageNotFoundComponent } from "./page-not-found/page-not-found.component
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap/modal/modal-ref';
 import { AppCustomerModule } from './app-customer/app-customer.modules';
 import { CustomerService } from './services/customer.service';
+import { AppWaitressComponent } from './app-waitress/app-waitress.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent, AppLoginComponent, PageNotFoundComponent
+    AppComponent, AppLoginComponent, PageNotFoundComponent, AppWaitressComponent
   ],
   imports: [
     BrowserModule,

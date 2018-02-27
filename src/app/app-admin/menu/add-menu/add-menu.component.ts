@@ -4,7 +4,7 @@ import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Menu, MenuType, SizeList } from '../../../dataModels/menu';
 import { MenuService } from '../../../services/menu.service'
 import { NgForm } from '@angular/forms';
-import { Nutrition } from '../../../dataModels/nutrition';
+import { Nutrition, DailyValues} from '../../../dataModels/nutrition';
 
 @Component({
 	selector: 'add-menu',
@@ -16,6 +16,7 @@ export class AddMenuComponent implements OnInit {
 
 	menuTypes = MenuType;
 	sizeList = SizeList;
+	dailyValues = DailyValues;
 
 	@Input()
 	menus: Menu[];
@@ -27,7 +28,7 @@ export class AddMenuComponent implements OnInit {
 	menu: Menu;
 
 	constructor(public activeModal: NgbActiveModal,
-		private menuService: MenuService) { }
+		private menuService: MenuService) {}
 
 	ngOnInit() {
 		if (this.newAdd) {

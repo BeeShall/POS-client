@@ -27,10 +27,10 @@
               <tr>
                 <th colspan="2" class="border-top font-weight-normal text-nowrap">
                   <b>Calories</b>
-                  {{menu.nutrition.calories}}
+                  {{menu.nutrition.calories.calories}}
                 </th>
                 <td class="border-top font-weight-normal text-nowrap">
-                  Calories from Fat 130
+                  Calories from Fat {{menu.nutrition.calories.caloriesFromFat}}
                 </td>
               </tr>
               <tr class="thick-row">
@@ -44,7 +44,7 @@
                   {{menu.nutrition.fat.fat}}g
                 </th>
                 <td class="border-top font-weight-normal text-nowrap">
-                  <b>22%</b>
+                  <b>{{(menu.nutrition.fat.fat/dailyValues.fat).toPrecision(2)*100}}%</b>
                 </td>
               </tr>
               <tr>
@@ -54,7 +54,7 @@
                   Saturated Fat {{menu.nutrition.fat.satFat}}g
                 </th>
                 <td class="border-top font-weight-normal text-nowrap">
-                  <b>22%</b>
+                  <b>{{(menu.nutrition.fat.satFat/dailyValues.satFat).toPrecision(2)*100}}%</b>
                 </td>
               </tr>
               <tr>
@@ -81,7 +81,7 @@
                   {{menu.nutrition.cholestrol}}mg
                 </th>
                 <td class="border-top font-weight-normal text-nowrap">
-                  <b>18%</b>
+                  <b>{{(menu.nutrition.cholestrol/dailyValues.cholestrol).toPrecision(2)*100}}%</b>
                 </td>
               </tr>
               <tr>
@@ -90,7 +90,7 @@
                   {{menu.nutrition.sodium}}mg
                 </th>
                 <td class="border-top font-weight-normal text-nowrap">
-                  <b>2%</b>
+                  <b>{{(menu.nutrition.sodium/dailyValues.sodium).toPrecision(2)*100}}%</b>
                 </td>
               </tr>
               <tr>
@@ -99,7 +99,7 @@
                   {{menu.nutrition.carbs.carbs}}g
                 </th>
                 <td class="border-top font-weight-normal text-nowrap">
-                  <b>6%</b>
+                  <b>{{(menu.nutrition.carbs.carbs/dailyValues.carbs).toPrecision(2)*100}}%</b>
                 </td>
               </tr>
               <tr>
@@ -109,7 +109,7 @@
                   Dietary Fiber {{menu.nutrition.carbs.fiber}}g
                 </th>
                 <td class="border-top font-weight-normal text-nowrap">
-                  <b>4%</b>
+                  <b>{{(menu.nutrition.carbs.fiber/dailyValues.fiber).toPrecision(2)*100}}%</b>
                 </td>
               </tr>
               <tr>

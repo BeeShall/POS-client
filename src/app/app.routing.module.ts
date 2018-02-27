@@ -6,6 +6,7 @@ import { MenuComponent } from './app-admin/menu/menu.component';
 import { EmployeeComponent } from './app-admin/employee/employee.component';
 import { AppAdminComponent } from './app-admin/app-admin.component';
 import { AppCustomerComponent } from './app-customer/app-customer.component';
+import { AppWaitressComponent } from './app-waitress/app-waitress.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -19,6 +20,7 @@ const routes: Routes = [
 			{ path: "employee", component: EmployeeComponent }
 		]
 	},
+	{path:'waitress',component:AppWaitressComponent},
 	{ path: '**', component: PageNotFoundComponent }
 ]
 
