@@ -22,4 +22,9 @@ export class CustomerService {
 		return this.http.get(this.apiUrl+"getAllOrders",this.options)
 			.map((res:Response) => res.json())
 	}
+
+	getAllActiveOrders(): Observable<any> {
+		return this.http.get(this.apiUrl+"getAllActiveOrders",this.options)
+			.map((res:Response) => res.json())
+	}
 }

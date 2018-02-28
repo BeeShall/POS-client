@@ -10,7 +10,7 @@ import { AppWaitressComponent } from './app-waitress/app-waitress.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: '/login', pathMatch: 'full' },
-	{path: 'customer', component: AppCustomerComponent},
+	{ path: 'customer', component: AppCustomerComponent },
 	{ path: 'login', component: AppLoginComponent },
 	{
 		path: "admin", component: AppAdminComponent,
@@ -20,7 +20,7 @@ const routes: Routes = [
 			{ path: "employee", component: EmployeeComponent }
 		]
 	},
-	{path:'waitress',component:AppWaitressComponent},
+	{ path: 'waitress', component: AppWaitressComponent },
 	{ path: '**', component: PageNotFoundComponent }
 ]
 

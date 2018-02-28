@@ -40,7 +40,7 @@ export class MenuComponent implements OnInit {
 	  }
 
 	  delete(menuId, index){
-		  this.menuService.daleteMenu(menuId).subscribe(data=>{
+		  this.menuService.deleteMenu(menuId).subscribe(data=>{
 			  if(data["success"]){
 				  console.log("Menu successfully deleted")
 				  this.menus.splice(index, 1);

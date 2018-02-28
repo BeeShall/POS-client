@@ -19,6 +19,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap/modal/modal-ref';
 import { AppCustomerModule } from './app-customer/app-customer.modules';
 import { CustomerService } from './services/customer.service';
 import { AppWaitressComponent } from './app-waitress/app-waitress.component';
+import { SocketService } from './services/socket.service';
 
 
 @NgModule({
@@ -34,7 +35,7 @@ import { AppWaitressComponent } from './app-waitress/app-waitress.component';
     AppCustomerModule,
     NgbModule.forRoot()
   ],
-  providers: [AppService, MenuService, EmployeeService, CustomerService],
+  providers: [AppService, MenuService, EmployeeService, CustomerService, SocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

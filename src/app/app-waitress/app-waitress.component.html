@@ -14,13 +14,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr (click)="console.log('clicked')">
-              <td>1001</td>
-              <td>4</td>
-              <td>2</td>
-              <td>REGULAR</td>
-              <td>Chicken Parmesan</td>
-              <td>Bishal</td>
+            <tr *ngFor ="let order of orders"(click)="console.log('clicked')">
+              <td>{{order.orderNo}}</td>
+              <td>{{order.tableNo}}</td>
+              <td>{{order.quantity}}</td>
+              <td>{{order.size}}</td>
+              <td>{{order.menu.name}}</td>
+              <td>{{order.server}}</td>
             </tr>
           </tbody>
         </table>
@@ -34,20 +34,20 @@
       <div class="container">
         <div class="card-deck mb-3 text-center">
 
-          <div class="card mb-4 box-shadow">
+          <div *ngFor = "let table of ordersByTable" class="card mb-4 box-shadow">
             <div class="card-header">
               <div class="d-inline">
-                <h4 class="my-0 font-weight-normal d-inline float-left">Order # 1</h4>
-                <h4 class="my-0 font-weight-normal d-inline float-right">Table # 1</h4>
+                <h4 class="my-0 font-weight-normal d-inline float-left">Order # {{table.orderNo}}</h4>
+                <h4 class="my-0 font-weight-normal d-inline float-right">Table # {{table.tableNo}}</h4>
               </div>
             </div>
             <div class="card-body">
-              <div class="containe">
-                <div class="row">
-                  <div class="col">2</div>
-                  <div class="col">REGULAR</div>
-                  <div class="col"> Chicken Parm</div>
-                  <div class="col"> COMPLETED</div>
+              <div class="container">
+                <div *ngFor = "let order of table.orders"class="row">
+                  <div class="col">{{order.quantity}}</div>
+                  <div class="col">{{order.menu.prices[order.size].type}}</div>
+                  <div class="col"> {{order.menu.name}}</div>
+                  <div class="col"> {{order.status}}</div>
                 </div>
               </div>
             </div>
@@ -55,7 +55,7 @@
             <div class="card-footer text-muted">
               <div class="btn-group" role="group" aria-label="Basic example">
                 <button type="button" class="btn  btn-primary">View</button>
-                <button type="button" class="btn btn-success">Add</button>
+                <button type="button" class="btn btn-success" (click)="addOrder()">Add</button>
                 <button type="button" class="btn  btn-danger">Close</button>
               </div>
             </div>
