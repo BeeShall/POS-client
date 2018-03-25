@@ -13,6 +13,8 @@ export class ViewDetailsComponent implements OnInit {
 
 	dailyValues = DailyValues;
 
+	currentRate = 5;
+
 	@Input()
 	menu:Menu;
 

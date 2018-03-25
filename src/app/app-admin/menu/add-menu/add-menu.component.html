@@ -22,11 +22,11 @@
           <label for="ingredient">Ingredients: </label>
           <input type="text" name="menu.ingredients" id="ingredient" placeholder="Add an ingredient" class="form-control input-lg"
             [(ngModel)]="ingredient">
-          <button type="button" class="btn btn-small" (click)="menu.ingredients.push(ingredient)">Add</button>
+          <button type="button" class="btn btn-sm btn-success" (click)="menu.ingredients.push(ingredient)">Add</button>
         </div>
         <ul>
           <li *ngFor="let ing of menu.ingredients; let i = index">{{ing}}
-            <button (click)="menu.ingredients.splice(i,1)"> X </button>
+            <button class = "btn btn-danger btn-sm" (click)="menu.ingredients.splice(i,1)"> X </button>
           </li>
         </ul>
         <div class="form-group row">

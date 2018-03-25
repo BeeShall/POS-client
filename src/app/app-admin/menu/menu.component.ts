@@ -15,6 +15,8 @@ import {MenuService} from '../../services/menu.service'
 export class MenuComponent implements OnInit {
 
 	menus : Menu[]
+
+	public searchString: string;
 	
 	constructor(private modalService: NgbModal,
 	private menuService: MenuService) {

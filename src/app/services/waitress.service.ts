@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
 @Injectable()
-export class CustomerService {
+export class WaitressService {
 
 	private apiUrl = "http://localhost:5000/api/";
 	private headers = new Headers({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })
@@ -28,13 +28,15 @@ export class CustomerService {
 			.map((res:Response) => res.json())
 	}
 
-	closeOrder():Observable<any>{
-		return this.http.get(this.apiUrl+"closeOrder/",this.options)
+	closeOrder(orderId):Observable<any>{
+		console.log(orderId)
+		return this.http.get(this.apiUrl+"closeOrder?orderNo="+ orderId,this.options)
 			.map((res:Response) => res.json())
 	}
 
 	cancelOrder(data):Observable<any>{
-		return this.http.post(this.apiUrl+"closeOrder", data, this.options)
+		console.log(JSON.stringify(data))
+		return this.http.post(this.apiUrl+"cancelOrder", JSON.stringify(data), this.options)
 			.map((res:Response) => res.json())
 	}
 }

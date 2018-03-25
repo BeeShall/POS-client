@@ -58,6 +58,7 @@ export class AppCustomerComponent implements OnInit {
 				if (data["success"]) {
 
 					let orders = data["orders"];
+					console.log(data)
 
 					console.log("Orders", orders);
 					for(var i=0; i<orders.length; i++){
@@ -65,18 +66,18 @@ export class AppCustomerComponent implements OnInit {
 						this.activeOrders.push(orders[i]);
 					}
 
-					console.log(this.activeOrders);
+					console.log("ActiveOrders", this.activeOrders);
 
 				}
 				else {
-					console.log("Error fetching menus!")
+					console.log("Error fetching orders!")
 				}
 			})
 
 
 
 
-		console.log(this.dispMenu)
+		console.log("Display Menu", this.dispMenu)
 		//sort the menus based on their menuSection
 	}
 

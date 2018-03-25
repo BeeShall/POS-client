@@ -1,12 +1,11 @@
-<div>
+<div class="text-center">
   <nav class="navbar navbar-light bg-faded">
     <form class="form-inline">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      <button class="btn btn-outline-primary my-2 my-sm-0" (click)="openAddMenu()">Add</button>
+      <input type="text" class="form-control input-lg" name="searchString" placeholder="Type to search..." [(ngModel)]="searchString">
+      <button class="btn btn-outline-primary m-2" (click)="openAddMenu()">Add</button>
     </form>
   </nav>
-  <table class="table table-hover table-responsive">
+  <table class="table table-hover table-responsive text-center">
     <thead>
       <tr>
         <th>Name</th>
@@ -15,15 +14,15 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let menu of menus; let i = index;">
+      <tr *ngFor="let menu of menus| filter : 'name' : searchString; let i = index;">
         <td>{{menu.name}}</td>
         <td>{{menu.description}}</td>
         <td>{{menu.menutype}}</td>
         <td>
-          <button (click)="viewDetails(menu)">View Details/Edit</button>
+          <button class="btn btn-info" (click)="viewDetails(menu)">View Details/Edit</button>
         </td>
         <td>
-          <button (click)="delete(menu.menuId, i)">Delete</button>
+          <button class="btn btn-danger" (click)="delete(menu.menuId, i)">Delete</button>
         </td>
       </tr>
     </tbody>

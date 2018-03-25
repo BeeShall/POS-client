@@ -20,11 +20,14 @@ import { AppCustomerModule } from './app-customer/app-customer.modules';
 import { CustomerService } from './services/customer.service';
 import { AppWaitressComponent } from './app-waitress/app-waitress.component';
 import { SocketService } from './services/socket.service';
+import { AddOrderComponent } from './app-waitress/add-order/add-order.component';
+import { WaitressService } from './services/waitress.service';
+import { MainPipeModule } from './pipes/main-pipe.module';
 
 
 @NgModule({
   declarations: [
-    AppComponent, AppLoginComponent, PageNotFoundComponent, AppWaitressComponent
+    AppComponent, AppLoginComponent, PageNotFoundComponent, AppWaitressComponent, AddOrderComponent
   ],
   imports: [
     BrowserModule,
@@ -33,9 +36,11 @@ import { SocketService } from './services/socket.service';
     FormsModule,
     AppAdminModule,
     AppCustomerModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    MainPipeModule
   ],
-  providers: [AppService, MenuService, EmployeeService, CustomerService, SocketService],
+  providers: [AppService, MenuService, EmployeeService, CustomerService, SocketService, WaitressService],
+  entryComponents:[AddOrderComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

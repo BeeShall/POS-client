@@ -12,6 +12,9 @@ import { EmployeeService } from '../../services/employee.service';
 
 export class EmployeeComponent implements OnInit {
 	employees: Employee[]
+
+	public searchString: string;
+	
 	constructor(private modalService: NgbModal,
 		private employeeService: EmployeeService) {
 		this.employeeService.getAllEmployees()

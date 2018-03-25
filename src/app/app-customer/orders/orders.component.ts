@@ -19,6 +19,9 @@ export class OrdersComponent implements OnInit {
 
 	showCheckOut: boolean;
 
+	taxRate = 7;
+
+	total: number;
 	constructor(private customerService: CustomerService) {
 		this.showCheckOut = false;
 	}
@@ -30,7 +33,7 @@ export class OrdersComponent implements OnInit {
 			let tempOrder = this.pendingOrders[i];
 			let order = {
 				orderType: tempOrder.orderType,
-				menuId: tempOrder.menu.menuId,
+				menuId: tempOrder.menu['_id']['$oid'],
 				date: moment().toISOString(),
 				quantity: tempOrder.quantity,
 				size: tempOrder.size,
@@ -49,7 +52,7 @@ export class OrdersComponent implements OnInit {
 
 					this.pendingOrders.splice(0, this.pendingOrders.length);
 				}
-				else{
+				else {
 					console.log(data)
 				}
 			})
@@ -60,16 +63,46 @@ export class OrdersComponent implements OnInit {
 		this.pendingOrders.splice(i, 1);
 	}
 
-	finish() {
-		this.showCheckOut = true;
-	}
-
 	getTotal(orders) {
 		let total = 0;
 		for (var i = 0; i < orders.length; i++) {
 			total += orders[i].menu.prices[orders[i].size].price * orders[i].quantity
 		}
+		this.total = total;
 		return total;
+	}
+
+	getTax() {
+		return this.total * this.taxRate / 100;
+	}
+
+	tip:number = 0.0;
+	getTip(tipPercent){
+		console.log(tipPercent)
+		this.tip = tipPercent/100 * (this.total + this.getTax());
+	}
+
+	getGrandTotal() {
+		return this.total + this.getTax() + this.tip;
+	}
+
+	closeOrder() {
+		this.customerService.closeOrder()
+			.subscribe(data => {
+				if (data["success"]) {
+					console.log("Order Successfully closed")
+					this.showCheckOut = true;
+
+					//show the billing modal
+
+					//websocket call
+
+				}
+				else {
+					console.log("Problems Closing the order")
+				}
+			})
+
 	}
 
 	ngOnInit() { }

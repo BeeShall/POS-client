@@ -1,35 +1,34 @@
-<div>
-<nav class="navbar navbar-light bg-faded">
-  <form class="form-inline">
-    <input class="form-control mr-sm-2" type="text" placeholder="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    <button class="btn btn-outline-primary my-2 my-sm-0" (click)="openAddMenu()">Add</button>
-  </form>
-</nav>
-<table class="table table-hover table-responsive">
-  <thead>
-    <tr>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Username</th>
-      <th>Address</th>
-      <th>Phone</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let employee of employees; let i = index;">
-      <td>{{employee?.fName}}</td>
-      <td>{{employee?.lName}}</td>
-      <td>{{employee?.username}}</td>
-      <td>{{employee?.address}}</td>
-      <td>{{employee?.phone}}</td>
-      <td>
-        <button (click)="edit(employee)">Edit</button>
-      </td>
-      <td>
-        <button (click)="delete(employee.username, i)">Delete</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="text-center">
+  <nav class="navbar navbar-light bg-faded">
+    <form class="form-inline">
+      <input type="text" class="form-control" name="searchString" placeholder="Search by username" [(ngModel)]="searchString">
+      <button class="btn btn-outline-primary m-2" (click)="openAddMenu()">Add</button>
+    </form>
+  </nav>
+  <table class="table table-hover table-responsive text-center">
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Username</th>
+        <th>Address</th>
+        <th>Phone</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employee of employees | filter : 'username' : searchString; let i = index;">
+        <td>{{employee?.fName}}</td>
+        <td>{{employee?.lName}}</td>
+        <td>{{employee?.username}}</td>
+        <td>{{employee?.address}}</td>
+        <td>{{employee?.phone}}</td>
+        <td>
+          <button class="btn btn-info" (click)="edit(employee)">Edit</button>
+        </td>
+        <td>
+          <button class="btn btn-danger" (click)="delete(employee.username, i)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

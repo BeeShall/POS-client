@@ -1,0 +1,50 @@
+<div class="modal-header">
+  <h4 class="modal-title">Hi there!</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form>
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon">
+          <i class="glyphicon glyphicon-search"></i>
+        </div>
+        <input type="text" class="form-control" name="searchString" placeholder="Type to search..." [(ngModel)]="searchString">
+      </div>
+    </div>
+  </form>
+
+  <table class="table">
+    <tr>
+      <th>Name</th>
+      <th>Size</th>
+      <th>Quantity</th>
+      <th class="text-right">Actions</th>
+    </tr>
+    <tr *ngFor="let menu of data.menus | filter : 'name' : searchString; let i = index">
+      <td class="text-left">
+        {{menu.name}}
+      </td>
+      <td>
+        <span *ngIf="menu.prices.length == 1">REGULAR</span>
+        <select *ngIf="menu.prices.length > 1" [(ngModel)]="priceIndex" class="form-control mb-2 mr-sm-2">
+          <option *ngFor="let price of menu.prices; let i = index" value="{{i}}">{{price.type}}</option>
+        </select>
+      </td>
+
+      <td>
+        <select [(ngModel)]="quantity" class="form-control mb-2 mr-sm-2">
+          <option *ngFor="let index of numbers" value="{{index}}">{{index}}</option>
+        </select>
+      </td>
+      <td>
+        <button class="btn btn-sm btn-success" (click)="addOrder(i, quantity, priceIndex)">Add</button>
+      </td>
+    </tr>
+  </table>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+</div>

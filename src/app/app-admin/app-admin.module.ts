@@ -9,10 +9,12 @@ import { MenuComponent } from './menu/menu.component';
 import { AddMenuComponent } from './menu/add-menu/add-menu.component';
 import {AddEmployeeComponent} from './employee/add-employee/add-employee.component'
 import { RouterModule } from '@angular/router';
+import { FilterPipe } from '../pipes/filter.pipe';
+import { MainPipeModule } from '../pipes/main-pipe.module';
 
 
 @NgModule({
-	imports: [FormsModule, CommonModule, NgbModule, ReactiveFormsModule, RouterModule],
+	imports: [FormsModule, CommonModule, NgbModule, ReactiveFormsModule, RouterModule, MainPipeModule],
 	exports: [],
 	declarations: [AppAdminComponent, EmployeeComponent, MenuComponent,  AddMenuComponent, AddEmployeeComponent],
 	entryComponents : [ AddMenuComponent, AddEmployeeComponent],

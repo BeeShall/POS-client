@@ -14,7 +14,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor ="let order of orders"(click)="console.log('clicked')">
+            <tr *ngFor="let order of orders">
               <td>{{order.orderNo}}</td>
               <td>{{order.tableNo}}</td>
               <td>{{order.quantity}}</td>
@@ -32,9 +32,8 @@
     <ng-template ngbTabContent>
 
       <div class="container">
-        <div class="card-deck mb-3 text-center">
-
-          <div *ngFor = "let table of ordersByTable" class="card mb-4 box-shadow">
+        <div class="row mb-3 text-center">
+          <div *ngFor="let table of ordersByTable; let i =index" class="card col-md-5 p-0 m-4 box-shadow">
             <div class="card-header">
               <div class="d-inline">
                 <h4 class="my-0 font-weight-normal d-inline float-left">Order # {{table.orderNo}}</h4>
@@ -43,27 +42,26 @@
             </div>
             <div class="card-body">
               <div class="container">
-                <div *ngFor = "let order of table.orders"class="row">
+                <div *ngFor="let order of table.orders; let j = index " class="row">
                   <div class="col">{{order.quantity}}</div>
                   <div class="col">{{order.menu.prices[order.size].type}}</div>
                   <div class="col"> {{order.menu.name}}</div>
                   <div class="col"> {{order.status}}</div>
+                  <button class="btn btn-danger btn-sm mb-3" (click)="cancelOrder(i, j)">X</button>
                 </div>
               </div>
             </div>
 
             <div class="card-footer text-muted">
               <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn  btn-primary">View</button>
-                <button type="button" class="btn btn-success" (click)="addOrder()">Add</button>
-                <button type="button" class="btn  btn-danger">Close</button>
+                <button type="button" class="btn btn-success" (click)="addOrder(i)">Add</button>
+                <button type="button" class="btn  btn-danger" (click)="closeOrder(table.orderNo)">Close</button>
               </div>
             </div>
+
           </div>
         </div>
       </div>
-
-
     </ng-template>
   </ngb-tab>
 </ngb-tabset>

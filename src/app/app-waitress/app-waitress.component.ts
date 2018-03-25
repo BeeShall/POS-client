@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { NgbTabsetConfig } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, Input } from '@angular/core';
+import { NgbTabsetConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Order } from '../dataModels/order';
 import { SocketService } from '../services/socket.service';
-import { CustomerService } from '../services/customer.service';
 import { MenuService } from '../services/menu.service';
 import { Menu } from '../dataModels/menu';
+import { AddOrderComponent } from './add-order/add-order.component';
+import { WaitressService } from '../services/waitress.service';
 
 @Component({
 	selector: 'app-waitress',
@@ -19,12 +20,18 @@ export class AppWaitressComponent implements OnInit {
 	menuKeys: string[] = [];
 	ordersByTable = [];
 
+	@Input()
+	server: string = "";
+
+
 	constructor(config: NgbTabsetConfig,
 		private socketService: SocketService,
-		private customerService: CustomerService,
-		private menuService: MenuService) {
+		private waitressService: WaitressService,
+		private menuService: MenuService,
+		private modalService: NgbModal) {
 		config.justify = 'center';
 		config.type = 'pills';
+		this.server ="BISHAL"
 	}
 
 	ngOnInit() {
@@ -44,28 +51,29 @@ export class AppWaitressComponent implements OnInit {
 		});
 	}
 
+
 	sortMenus(menus) {
 
 
 		for (let menu of menus) {
-			this.menus[menu.menuId] = menu;
-			this.menuKeys.push(menu.menuId);
+			this.menus[menu['_id']['$oid']] = menu;
+			this.menuKeys.push(menu['_id']['$oid']);
 		}
 
 
-		this.customerService.getAllActiveOrders()
+		this.waitressService.getAllActiveOrders()
 			.subscribe(data => {
 				if (data["success"]) {
 
 					let orders = data["orders"];
 
 					console.log(orders)
+					console.log(menus)
 
 					for (var i = 0; i < orders.length; i++) {
 						let ordersArray = [];
 
 						let tableOrders = orders[i].orders;
-						console.log("tableOrders", tableOrders)
 						for (let j = 0; j < tableOrders.length; j++) {
 							tableOrders[j].menu = this.menus[tableOrders[j].menuId];
 							ordersArray.push(tableOrders[j]);
@@ -78,7 +86,6 @@ export class AppWaitressComponent implements OnInit {
 								menu: tableOrders[j].menu
 							});
 						}
-						console.log("ordersArray", ordersArray)
 						this.ordersByTable.push({
 							orderNo: orders[i].orderNo,
 							tableNo: orders[i].tableNo,
@@ -100,22 +107,71 @@ export class AppWaitressComponent implements OnInit {
 		//modalRef.componentInstance.menu = menu;
 	}
 
+	cancelOrder(tableIndex, OrderIndex) {
+		this.waitressService.cancelOrder({ orderId: this.ordersByTable[tableIndex].orderNo, cancelId: this.ordersByTable[tableIndex].orders[OrderIndex].date })
+			.subscribe(data => {
+				if (data["success"]) {
+					let orderMenu = this.ordersByTable[tableIndex].orders[OrderIndex].menu;
+					let orderNo = this.ordersByTable[tableIndex].orderNo;
+
+					for (let i = 0; i < this.orders.length; i++) {
+						if (this.orders[i].orderNo == orderNo && this.orders[i].menu == orderMenu) {
+							this.orders.splice(i, 1)
+							break;
+						}
+					}
+
+					this.ordersByTable[tableIndex].orders.splice(OrderIndex, 1);
+					console.log("Order Successfully canceled")
+
+					//websocket call
+
+				}
+				else {
+					console.log("Problems Canceling the order")
+				}
+			})
+	}
+
 	closeOrder(orderId) {
+
+		console.log("orderId", orderId)
+		this.waitressService.closeOrder(orderId)
+			.subscribe(data => {
+				if (data["success"]) {
+					console.log("Order Successfully closed")
+					//remove from ordersByTable
+					for(let i =0; i<this.ordersByTable.length; i++){
+						if(this.ordersByTable[i].orderNo == orderId){
+							this.ordersByTable.splice(i, 1);
+						}
+					}
+					//websocket call
+		
+				}
+				else {
+					console.log("Problems Closing the order")
+				}
+			})
 
 	}
 
-	addOrder(order) {
+	addOrder(tableIndex) {
+
+		const modalRef = this.modalService.open(AddOrderComponent);
+		modalRef.componentInstance.data = {
+			menus: Object.values(this.menus),
+			server: this.server,
+			tableIndex: tableIndex,
+			orders : this.orders,
+			ordersByTable : this.ordersByTable
+		}
+
 
 		this.socketService.hubConnection
 			.invoke('test', "Testing 1 2 3!")
 			.catch(err => console.error(err));
 
-		//use autoCompletes for this
 	}
-
-	viewOrdersForTable() {
-
-	}
-
 
 }
