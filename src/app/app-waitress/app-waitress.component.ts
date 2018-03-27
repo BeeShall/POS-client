@@ -6,6 +6,7 @@ import { MenuService } from '../services/menu.service';
 import { Menu } from '../dataModels/menu';
 import { AddOrderComponent } from './add-order/add-order.component';
 import { WaitressService } from '../services/waitress.service';
+import { CloseOrderComponent } from './add-order/close-order/close-order.component';
 
 @Component({
 	selector: 'app-waitress',
@@ -136,7 +137,7 @@ export class AppWaitressComponent implements OnInit {
 			})
 	}
 
-	closeOrder(orderId) {
+	closeOrder(orderId, orders) {
 
 		console.log("orderId", orderId)
 		this.waitressService.closeOrder(orderId)
@@ -144,11 +145,28 @@ export class AppWaitressComponent implements OnInit {
 				if (data["success"]) {
 					console.log("Order Successfully closed")
 					//remove from ordersByTable
+
+					let total = 0
+
+					for(let i =0; i<orders.length; i++){
+						let price = orders[i].menu.prices[orders[i].size].price
+						total += orders[i].quantity * price
+					}
+
+					const modalRef = this.modalService.open(CloseOrderComponent);
+					modalRef.componentInstance.orderId = orderId;
+					modalRef.componentInstance.total = total
+
+					
+
 					for(let i =0; i<this.ordersByTable.length; i++){
-						if(this.ordersByTable[i].orderNo == orderId){
+						if(this.ordersByTable[i].orderId == orderId){
+							
 							this.ordersByTable.splice(i, 1);
 						}
 					}
+
+					
 					//websocket call
 		
 				}

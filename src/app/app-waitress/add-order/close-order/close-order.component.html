@@ -1,0 +1,86 @@
+<div class="modal-header">
+  <h4 class="modal-title">Thank You!</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body m-0">
+  <div id="checkOut" *ngIf="showCheckOut" class="card my-4 p-2">
+    <h5 class="card-header">Check Out</h5>
+    <div class="card-body">
+      <div class="col order-md-1">
+        <form class="needs-validation" novalidate="">
+
+          <h4 class="mb-3">Payment</h4>
+
+          <div class="d-block my-3">
+            <div class="custom-control custom-radio">
+              <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="">
+              <label class="custom-control-label" for="credit">Credit card</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required="">
+              <label class="custom-control-label" for="debit">Debit card</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required="">
+              <label class="custom-control-label" for="paypal">Paypal</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="cc-name">Name on card</label>
+              <input type="text" class="form-control" id="cc-name" placeholder="" required="">
+              <small class="text-muted">Full name as displayed on card</small>
+              <div class="invalid-feedback">
+                Name on card is required
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="cc-number">Credit card number</label>
+              <input type="text" class="form-control" id="cc-number" placeholder="" required="">
+              <div class="invalid-feedback">
+                Credit card number is required
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3 mb-3">
+              <label for="cc-expiration">Expiration</label>
+              <input type="text" class="form-control" id="cc-expiration" placeholder="" required="">
+              <div class="invalid-feedback">
+                Expiration date required
+              </div>
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="cc-expiration">CVV</label>
+              <input type="text" class="form-control" id="cc-cvv" placeholder="" required="">
+              <div class="invalid-feedback">
+                Security code required
+              </div>
+            </div>
+          </div>
+          <hr class="mb-4">
+          <button class="btn btn-primary btn-lg btn-block" type="submit" (click)="completePayment()">Complete Payment</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!showCheckOut" class="card container mb-3 p-2">
+    <div *ngIf="!tipAdded" class="input-group mb-3">
+      <label for="tip">Include a tip: </label>
+      <input type="number" class="form-control col-sm-6 m-1" name="tip" id="tip" [(ngModel)]="tip">
+      <button type="button" class="btn btn-primary pull-right" (click)="addTip(tip)">Add tip</button>
+    </div>
+    <ngb-alert *ngIf="alertEmailed" [type]="success" (close)="closeAlert(alert)">Successfully emailed receipt!</ngb-alert>
+    <label for="receipt-email">Email your Receipt: </label>
+    <div class="input-group mb-3">
+      <input type="email" class="form-control col-sm-6 mr-1" name="email" [(ngModel)]="email">
+      <button type="button" class="btn btn-primary pull-right" (click)="emailReceipt(email)">Send</button>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+</div>

@@ -37,7 +37,6 @@ export class OrderCompleteComponent implements OnInit {
 			.subscribe(data => {
 				if(data["success"]){
 					console.log("Successfully added review")
-					this.alertEmailed = true
 				}
 				else{
 					console.log(data["error"])
@@ -55,6 +54,7 @@ export class OrderCompleteComponent implements OnInit {
 		this.customerService.emailReceipt(data)
 			.subscribe(data => {
 				if(data["success"]){
+					this.alertEmailed = true
 					console.log("Successfully added review")
 				}
 				else{

@@ -39,4 +39,19 @@ export class WaitressService {
 		return this.http.post(this.apiUrl+"cancelOrder", JSON.stringify(data), this.options)
 			.map((res:Response) => res.json())
 	}
+
+	emailReceipt(data):Observable<any>{
+		return this.http.post(this.apiUrl+"emailReceipt", data,this.options)
+			.map((res:Response) => res.json())
+	}
+
+	completePayment(data):Observable<any>{
+		return this.http.post(this.apiUrl+"completeOrder", data,this.options)
+			.map((res:Response) => res.json())
+	}
+
+	addTip(data):Observable<any>{
+		return this.http.post(this.apiUrl+"addTip", data,this.options)
+			.map((res:Response) => res.json())
+	}
 }
