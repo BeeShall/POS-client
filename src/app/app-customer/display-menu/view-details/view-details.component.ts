@@ -6,7 +6,7 @@ import { DailyValues } from '../../../dataModels/nutrition';
 @Component({
 	selector: 'view-details',
 	templateUrl: 'view-details.component.html',
-	styleUrls: ["view-details.component.css"]
+	styleUrls: ["view-details.component.css"],
 })
 
 export class ViewDetailsComponent implements OnInit {

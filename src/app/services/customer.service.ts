@@ -29,12 +29,28 @@ export class CustomerService {
 	}
 
 	closeOrder():Observable<any>{
-		return this.http.get(this.apiUrl+"closeOrder/",this.options)
+		return this.http.get(this.apiUrl+"closeOrder",this.options)
 			.map((res:Response) => res.json())
 	}
 
 	cancelOrder(data):Observable<any>{
-		return this.http.post(this.apiUrl+"closeOrder", data, this.options)
+		return this.http.post(this.apiUrl+"cancelOrder", data, this.options)
 			.map((res:Response) => res.json())
 	}
+
+	completePayment(data):Observable<any>{
+		return this.http.post(this.apiUrl+"completeOrder", data,this.options)
+			.map((res:Response) => res.json())
+	}
+
+	addReview(data):Observable<any>{
+		return this.http.post(this.apiUrl+"addReview", data,this.options)
+			.map((res:Response) => res.json())
+	}
+
+	emailReceipt(data):Observable<any>{
+		return this.http.post(this.apiUrl+"emailReceipt", data,this.options)
+			.map((res:Response) => res.json())
+	}
+
 }

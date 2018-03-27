@@ -65,30 +65,33 @@ export class AppWaitressComponent implements OnInit {
 			.subscribe(data => {
 				if (data["success"]) {
 
-					let orders = data["orders"];
+					let tempOrders = data["orders"];
 
-					console.log(orders)
+					console.log(tempOrders)
 					console.log(menus)
 
-					for (var i = 0; i < orders.length; i++) {
+					for (var i = 0; i < tempOrders.length; i++) {
 						let ordersArray = [];
 
-						let tableOrders = orders[i].orders;
+						let tableOrders = tempOrders[i].orders;
+						console.log(tableOrders)
 						for (let j = 0; j < tableOrders.length; j++) {
 							tableOrders[j].menu = this.menus[tableOrders[j].menuId];
 							ordersArray.push(tableOrders[j]);
 							this.orders.push({
-								orderNo: orders[i].orderNo,
-								tableNo: orders[i].tableNo,
+								orderNo: tempOrders[i].orderNo,
+								orderId: tempOrders[i]['_id']['$oid'],
+								tableNo: tempOrders[i].tableNo,
 								quantity: tableOrders[j].quantity,
 								size: tableOrders[j].menu.prices[tableOrders[j].size].type,
-								server: orders[i].server,
+								server: tempOrders[i].server,
 								menu: tableOrders[j].menu
 							});
 						}
 						this.ordersByTable.push({
-							orderNo: orders[i].orderNo,
-							tableNo: orders[i].tableNo,
+							orderNo: tempOrders[i].orderNo,
+							tableNo: tempOrders[i].tableNo,
+							orderId: tempOrders[i]['_id']['$oid'],
 							orders: ordersArray
 						});
 					}
@@ -108,7 +111,7 @@ export class AppWaitressComponent implements OnInit {
 	}
 
 	cancelOrder(tableIndex, OrderIndex) {
-		this.waitressService.cancelOrder({ orderId: this.ordersByTable[tableIndex].orderNo, cancelId: this.ordersByTable[tableIndex].orders[OrderIndex].date })
+		this.waitressService.cancelOrder({ orderId: this.ordersByTable[tableIndex].orderId, cancelId: this.ordersByTable[tableIndex].orders[OrderIndex].date })
 			.subscribe(data => {
 				if (data["success"]) {
 					let orderMenu = this.ordersByTable[tableIndex].orders[OrderIndex].menu;
@@ -167,10 +170,6 @@ export class AppWaitressComponent implements OnInit {
 			ordersByTable : this.ordersByTable
 		}
 
-
-		this.socketService.hubConnection
-			.invoke('test', "Testing 1 2 3!")
-			.catch(err => console.error(err));
 
 	}
 

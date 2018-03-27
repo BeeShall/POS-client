@@ -3,6 +3,8 @@ import { Order } from '../../dataModels/order';
 import { Menu } from '../../dataModels/menu';
 import * as moment from 'moment';
 import { CustomerService } from '../../services/customer.service';
+import { OrderCompleteComponent } from "./order-complete/order-complete.component";
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
 	selector: 'orders',
@@ -22,8 +24,9 @@ export class OrdersComponent implements OnInit {
 	taxRate = 7;
 
 	total: number;
-	constructor(private customerService: CustomerService) {
-		this.showCheckOut = false;
+	constructor(private customerService: CustomerService,
+		private modalService: NgbModal) {
+		this.showCheckOut = true;
 	}
 
 	addToActive() {
@@ -76,10 +79,10 @@ export class OrdersComponent implements OnInit {
 		return this.total * this.taxRate / 100;
 	}
 
-	tip:number = 0.0;
-	getTip(tipPercent){
+	tip: number = 0.0;
+	getTip(tipPercent) {
 		console.log(tipPercent)
-		this.tip = tipPercent/100 * (this.total + this.getTax());
+		this.tip = tipPercent / 100 * (this.total + this.getTax());
 	}
 
 	getGrandTotal() {
@@ -93,13 +96,40 @@ export class OrdersComponent implements OnInit {
 					console.log("Order Successfully closed")
 					this.showCheckOut = true;
 
-					//show the billing modal
-
-					//websocket call
-
 				}
 				else {
 					console.log("Problems Closing the order")
+				}
+			})
+
+	}
+
+	completePayment() {
+		let paymentData = {
+			tax: this.getTax(),
+			tip: this.tip
+		}
+
+		let orderedMenus = new Set();
+		let reviewMenus = [];
+		for (let i = 0; i < this.activeOrders.length; i++) {
+			if (!orderedMenus.has(this.activeOrders[i]['menuId'])) {
+				orderedMenus.add(this.activeOrders[i]['menuId'])
+				reviewMenus.push(this.activeOrders[i])
+			}
+		}
+
+
+
+
+		this.customerService.completePayment(paymentData)
+			.subscribe(data => {
+				if (data["success"]) {
+					console.log(reviewMenus)
+					const modalRef = this.modalService.open(OrderCompleteComponent, { size: "lg" });
+					modalRef.componentInstance.activeOrders = reviewMenus;
+					modalRef.componentInstance.orderId = data["orderId"]
+
 				}
 			})
 

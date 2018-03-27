@@ -12,10 +12,16 @@ export class Menu {
 	description: string;
 	ingredients: string[] = [];
 	menutype: string;
-	nutrition: Nutrition = new Nutrition()
+	nutrition: Nutrition = new Nutrition();
+	reviews: Review = new Review();
 }
 
 export class Price {
 	type: string;
 	price: number;
+}
+
+export class Review{
+	rating: number;
+	review: string;
 }

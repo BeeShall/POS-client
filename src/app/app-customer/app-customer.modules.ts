@@ -8,13 +8,14 @@ import { RouterModule } from '@angular/router';
 import { DisplayMenuComponent } from './display-menu/display-menu.component';
 import { OrdersComponent } from './orders/orders.component';
 import { ViewDetailsComponent } from './display-menu/view-details/view-details.component';
+import { OrderCompleteComponent } from './orders/order-complete/order-complete.component';
 
 
 @NgModule({
 	imports: [FormsModule, CommonModule, NgbModule, ReactiveFormsModule, RouterModule],
 	exports: [],
-	declarations: [AppCustomerComponent, DisplayMenuComponent, OrdersComponent, ViewDetailsComponent],
-	entryComponents : [ ViewDetailsComponent],
+	declarations: [AppCustomerComponent, DisplayMenuComponent, OrdersComponent, ViewDetailsComponent, OrderCompleteComponent],
+	entryComponents : [ ViewDetailsComponent, OrderCompleteComponent],
 	providers: [],
 })
 export class AppCustomerModule { }

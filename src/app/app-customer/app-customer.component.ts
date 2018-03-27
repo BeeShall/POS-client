@@ -48,7 +48,7 @@ export class AppCustomerComponent implements OnInit {
 		let idMenu = {};
 
 		for (let menu of menus) {
-			idMenu[menu.menuId] = menu;
+			idMenu[menu["_id"]["$oid"]] = menu;
 			this.dispMenu[menu.menutype].push(menu);
 		}
 

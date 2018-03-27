@@ -25,9 +25,11 @@ export class AddOrderComponent implements OnInit {
 
 	addOrder(menuIndex, quantity, size) {
 
+		console.log(this.data.menus[menuIndex])
+
 		let order = {
 			orderType: "WAITRESS",
-			menuId: this.data.menus[menuIndex].menuId,
+			menuId: this.data.menus[menuIndex]['_id']['$oid'],
 			date: moment().toISOString(),
 			quantity: quantity,
 			size: size ? size : 0,

@@ -1,0 +1,40 @@
+<div class="modal-header">
+  <h4 class="modal-title">Thank You!</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body m-0">
+  <div class="card container mb-3 p-2">
+    <ngb-alert *ngIf="alertEmailed" [type]="success" (close)="closeAlert(alert)">Successfully emailed receipt!</ngb-alert>
+    <label for="receipt-email">Email your Receipt: </label>
+    <div class="input-group mb-3">
+      <input type="email" class="form-control col-sm-4 mr-1" name="email" [(ngModel)]="email">
+      <button type="button" class="btn btn-primary pull-right" (click)="emailReceipt(email)">Send</button>
+    </div>
+  </div>
+  <div class="card p-2">
+    <div class="h3"> Please rate the food you ordered: </div>
+    <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+      <ngb-panel *ngFor="let k of activeOrders" title="{{k.menu.name}}">
+        <ng-template ngbPanelContent>
+          <div class="input-group mb-3">
+            <div class="mb-2">
+              <span class="h6">Rating: </span>
+              <ngb-rating name="rating" [(ngModel)]="k.menu.rating"></ngb-rating>
+            </div>
+            <div>
+              <span class="h6">Review:</span>
+              <textarea class="form-control mb-1" name="review" [(ngModel)]="k.menu.review"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary pull-right" (click)="addReview(k.menuId, k.menu.rating, k.menu.review)">Add Review</button>
+          </div>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+  </div>
+
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+</div>
