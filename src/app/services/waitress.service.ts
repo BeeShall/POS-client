@@ -54,4 +54,9 @@ export class WaitressService {
 		return this.http.post(this.apiUrl+"addTip", data,this.options)
 			.map((res:Response) => res.json())
 	}
+
+	getReservations(): Observable<any> {
+		return this.http.get(this.apiUrl+"getReservations",this.options)
+			.map((res:Response) => res.json())
+	}
 }

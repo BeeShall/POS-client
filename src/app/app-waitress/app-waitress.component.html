@@ -64,4 +64,28 @@
       </div>
     </ng-template>
   </ngb-tab>
+  
+  <ngb-tab title="Reservations">
+    <ng-template ngbTabContent>
+        <div class="table-responsive">
+            <table class="table table-striped table-sm">
+              <thead class="thead-dark">
+                <tr>
+                  <th>Time</th>
+                  <th>Number of People</th>
+                  <th>Phone Number</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let reservation of reservations">
+                  <td>{{formatDateTime(reservation.date)}}</td>
+                  <td>{{reservation.people}}</td>
+                  <td>{{reservation.number}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+    </ng-template>
+  </ngb-tab>
+
 </ngb-tabset>

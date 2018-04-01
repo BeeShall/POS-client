@@ -29,6 +29,7 @@ export class CloseOrderComponent implements OnInit {
 	completePayment() {
 		let paymentData = {
 			tax: 0.14 * this.total,
+			tip: 0
 		}
 		this.waitressService.completePayment(paymentData)
 			.subscribe(data => {

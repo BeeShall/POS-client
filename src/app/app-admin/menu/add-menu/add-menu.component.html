@@ -26,7 +26,7 @@
         </div>
         <ul>
           <li *ngFor="let ing of menu.ingredients; let i = index">{{ing}}
-            <button class = "btn btn-danger btn-sm" (click)="menu.ingredients.splice(i,1)"> X </button>
+            <button class="btn btn-danger btn-sm" (click)="menu.ingredients.splice(i,1)"> X </button>
           </li>
         </ul>
         <div class="form-group row">
@@ -53,6 +53,20 @@
           </ul>
         </div>
 
+        <div class="form-group row">
+          <label for="fileUpload">Choose Files to Upload: </label>
+          <input type="file" (change)=addImage($event) multiple />
+          <br/>
+          <ul>
+            <li *ngFor="let item of menu.images; let i = index">
+                <strong>{{ item?.name }}</strong>
+              <button type="button" class="btn btn-danger btn-sm" (click)="removeImage(i)">Remove
+              </button>
+            </li>
+          </ul>
+        </div>
+
+
         <hr>
 
         <section ngModelGroup="nutrition" class=" border m-0 p-2">
@@ -63,11 +77,11 @@
               <tr>
                 <th colspan="2" class="border-top font-weight-normal text-nowrap">
                   <b>Calories</b>
-                  <input type="number" name="calories" min="0" class ="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.calories.calories">
+                  <input type="number" name="calories" min="0" class="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.calories.calories">
                 </th>
                 <td class="border-top font-weight-normal text-nowrap">
                   Calories from Fat
-                  <input type="number" name="caloriesFromFat" min="0" class ="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.calories.caloriesFromFat">
+                  <input type="number" name="caloriesFromFat" min="0" class="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.calories.caloriesFromFat">
                 </td>
               </tr>
               <tr class="thick-row">
@@ -78,27 +92,29 @@
               <tr>
                 <th colspan="2" class="border-top font-weight-normal text-nowrap">
                   <b>Total Fat</b>
-                  <input type="number" name="fat"min="0" class ="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.fat.fat">g
+                  <input type="number" name="fat" min="0" class="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.fat.fat">g
                 </th>
                 <td class="border-top font-weight-normal text-nowrap">
-                    {{(menu.nutrition.fat.fat/dailyValues.fat).toPrecision(2)*100}}%
+                  {{(menu.nutrition.fat.fat/dailyValues.fat).toPrecision(2)*100}}%
                 </td>
               </tr>
               <tr>
                 <td class="blank-cell">
                 </td>
                 <th class="border-top font-weight-normal text-nowrap">
-                  Saturated Fat <input name="satFat" type="number" min="0" class ="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.fat.satFat">g
+                  Saturated Fat
+                  <input name="satFat" type="number" min="0" class="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.fat.satFat">g
                 </th>
                 <td class="border-top font-weight-normal text-nowrap">
-                    {{(menu.nutrition.fat.satFat/dailyValues.satFat).toPrecision(2)*100}}%
+                  {{(menu.nutrition.fat.satFat/dailyValues.satFat).toPrecision(2)*100}}%
                 </td>
               </tr>
               <tr>
                 <td class="blank-cell">
                 </td>
                 <th class="border-top font-weight-normal text-nowrap">
-                  Unsaturated Fat <input type="number" name="unsaatFat" min="0" class ="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.fat.unsatFat">g
+                  Unsaturated Fat
+                  <input type="number" name="unsaatFat" min="0" class="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.fat.unsatFat">g
                 </th>
                 <td class="border-top font-weight-normal text-nowrap">
                 </td>
@@ -107,7 +123,8 @@
                 <td class="blank-cell">
                 </td>
                 <th class="border-top font-weight-normal text-nowrap">
-                  Trans Fat <input type="number" name="transFat" min="0" class ="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.fat.transFat">g
+                  Trans Fat
+                  <input type="number" name="transFat" min="0" class="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.fat.transFat">g
                 </th>
                 <td class="border-top font-weight-normal text-nowrap">
                 </td>
@@ -115,45 +132,47 @@
               <tr>
                 <th colspan="2" class="border-top font-weight-normal text-nowrap">
                   <b>Cholesterol</b>
-                  <input type="number" name="cholestrol" min="0" class ="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.cholestrol">mg
+                  <input type="number" name="cholestrol" min="0" class="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.cholestrol">mg
                 </th>
                 <td class="border-top font-weight-normal text-nowrap">
-                    {{(menu.nutrition.cholestrol/dailyValues.cholestrol).toPrecision(2)*100}}%
+                  {{(menu.nutrition.cholestrol/dailyValues.cholestrol).toPrecision(2)*100}}%
                 </td>
               </tr>
               <tr>
                 <th colspan="2" class="border-top font-weight-normal text-nowrap">
                   <b>Sodium</b>
-                  <input type="number" name ="sodium" min="0" class ="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.sodium">mg
+                  <input type="number" name="sodium" min="0" class="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.sodium">mg
                 </th>
                 <td class="border-top font-weight-normal text-nowrap">
-                    {{(menu.nutrition.sodium/dailyValues.sodium).toPrecision(2)*100}}%
+                  {{(menu.nutrition.sodium/dailyValues.sodium).toPrecision(2)*100}}%
                 </td>
               </tr>
               <tr>
                 <th colspan="2" class="border-top font-weight-normal text-nowrap">
                   <b>Total Carbohydrate</b>
-                  <input type="number" name="carbs" min="0" class ="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.carbs.carbs">g
+                  <input type="number" name="carbs" min="0" class="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.carbs.carbs">g
                 </th>
                 <td class="border-top font-weight-normal text-nowrap">
-                    {{(menu.nutrition.carbs.carbs/dailyValues.carbs).toPrecision(2)*100}}%
+                  {{(menu.nutrition.carbs.carbs/dailyValues.carbs).toPrecision(2)*100}}%
                 </td>
               </tr>
               <tr>
                 <td class="blank-cell">
                 </td>
                 <th class="border-top font-weight-normal text-nowrap">
-                  Dietary Fiber <input type="number" name="fiber" min="0" class ="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.carbs.fiber">g
+                  Dietary Fiber
+                  <input type="number" name="fiber" min="0" class="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.carbs.fiber">g
                 </th>
                 <td class="border-top font-weight-normal text-nowrap">
-                    {{(menu.nutrition.carbs.fiber/dailyValues.fiber).toPrecision(2)*100}}%
+                  {{(menu.nutrition.carbs.fiber/dailyValues.fiber).toPrecision(2)*100}}%
                 </td>
               </tr>
               <tr>
                 <td class="blank-cell">
                 </td>
                 <th class="border-top font-weight-normal text-nowrap">
-                  Sugars <input type="number" name="sugar" min="0" class ="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.carbs.sugar">g
+                  Sugars
+                  <input type="number" name="sugar" min="0" class="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.carbs.sugar">g
                 </th>
                 <td class="border-top font-weight-normal text-nowrap">
                 </td>
@@ -161,7 +180,7 @@
               <tr class="thick-end">
                 <th colspan="2" class="border-top font-weight-normal text-nowrap">
                   <b>Protein</b>
-                  <input type="number"  name = "protein" min="0" class ="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.protein">g
+                  <input type="number" name="protein" min="0" class="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.protein">g
                 </th>
                 <td class="border-top font-weight-normal text-nowrap">
                 </td>
@@ -173,18 +192,22 @@
             <tbody>
               <tr>
                 <td colspan="2" class="border-top font-weight-normal text-nowrap">
-                  Vitamin A <input type="number" name="vita" min="0" max="100" class ="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.vitamin.vita">%
+                  Vitamin A
+                  <input type="number" name="vita" min="0" max="100" class="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.vitamin.vita">%
                 </td>
                 <td class="border-top font-weight-normal text-nowrap">
-                  Vitamin C <input type="number" name="vitc" min="0" max="100" class ="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.vitamin.vitc">%
+                  Vitamin C
+                  <input type="number" name="vitc" min="0" max="100" class="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.vitamin.vitc">%
                 </td>
               </tr>
               <tr class="border-bottom">
                 <td colspan="2" class="border-top font-weight-normal text-nowrap">
-                  Calcium <input type="number"  name = "calcium" min="0" max="100" class ="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.calcium">%
+                  Calcium
+                  <input type="number" name="calcium" min="0" max="100" class="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.calcium">%
                 </td>
                 <td class="border-top font-weight-normal text-nowrap">
-                  Iron <input type="number" name="iron" min="0" max="100" class ="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.iron">%
+                  Iron
+                  <input type="number" name="iron" min="0" max="100" class="form-control form-control-sm col-sm-2 d-inline" [(ngModel)]="menu.nutrition.iron">%
                 </td>
               </tr>
             </tbody>

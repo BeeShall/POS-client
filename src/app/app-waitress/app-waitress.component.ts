@@ -7,6 +7,8 @@ import { Menu } from '../dataModels/menu';
 import { AddOrderComponent } from './add-order/add-order.component';
 import { WaitressService } from '../services/waitress.service';
 import { CloseOrderComponent } from './add-order/close-order/close-order.component';
+import * as moment from 'moment';
+import { Observable } from 'rxjs/Observable'
 
 @Component({
 	selector: 'app-waitress',
@@ -20,6 +22,7 @@ export class AppWaitressComponent implements OnInit {
 	menus = {};
 	menuKeys: string[] = [];
 	ordersByTable = [];
+	reservations = [];
 
 	@Input()
 	server: string = "";
@@ -32,7 +35,7 @@ export class AppWaitressComponent implements OnInit {
 		private modalService: NgbModal) {
 		config.justify = 'center';
 		config.type = 'pills';
-		this.server ="BISHAL"
+		this.server = "BISHAL"
 	}
 
 	ngOnInit() {
@@ -46,15 +49,71 @@ export class AppWaitressComponent implements OnInit {
 				}
 			})
 
-		this.socketService.hubConnection.on('test', receivedMessage => {
-			console.log(receivedMessage)
-			return receivedMessage;
-		});
+		this.waitressService.getReservations()
+			.subscribe(data => {
+				if (data["success"]) {
+					this.reservations = data["reservations"]
+					this.setAlertForReminder()
+				}
+				else {
+					console.log("Database error in the server")
+				}
+			}, err => {
+				console.log("Error while fetching reservations!")
+			})
+	}
+
+	setAlertForReminder() {
+
+
+		//get the earliest reservation
+		let earliestReservationIndex = this.getEarliestReservationIndex()
+
+		let resTime = moment(this.reservations[earliestReservationIndex]['date'])
+
+		setTimeout(()=>{
+			this.reservations.splice(earliestReservationIndex,1)
+		}, resTime.diff(moment.now()))
+
+		//calculate the timeout
+		//setting alert for 30 minutes before the reservations
+		let alertTime = resTime.subtract(30, "minutes");
+
+		let timeOut = alertTime.diff(moment.now())
+
+		//calculate the timeout to delete it
+		setTimeout(()=>{
+
+			//what if the reservations are very close? work on that
+			alert("Reservation at "+resTime.format('MM/DD/YYYY hh:mm A')+"for "+this.reservations[earliestReservationIndex]['people']+" people!")
+			this.setAlertForReminder()
+		}, alertTime)
+	}
+
+	popAlert(time) {
+
+	}
+
+	getEarliestReservationIndex() {
+
+		//get all the reservation within the next 30 mins
+		//reservations alerts come every 30 mins
+		let earliestReservation = moment(this.reservations[0]['date'])
+		let earlyIndex = 0;
+		for (let i = 0; i < this.reservations.length; i++) {
+			let tempDate = moment(this.reservations[i]['date'])
+			if (tempDate.isBefore(earliestReservation)) {
+				earliestReservation = tempDate
+				earlyIndex = i;
+			}
+		}
+
+		return earlyIndex
+
 	}
 
 
 	sortMenus(menus) {
-
 
 		for (let menu of menus) {
 			this.menus[menu['_id']['$oid']] = menu;
@@ -148,7 +207,7 @@ export class AppWaitressComponent implements OnInit {
 
 					let total = 0
 
-					for(let i =0; i<orders.length; i++){
+					for (let i = 0; i < orders.length; i++) {
 						let price = orders[i].menu.prices[orders[i].size].price
 						total += orders[i].quantity * price
 					}
@@ -157,18 +216,18 @@ export class AppWaitressComponent implements OnInit {
 					modalRef.componentInstance.orderId = orderId;
 					modalRef.componentInstance.total = total
 
-					
 
-					for(let i =0; i<this.ordersByTable.length; i++){
-						if(this.ordersByTable[i].orderId == orderId){
-							
+
+					for (let i = 0; i < this.ordersByTable.length; i++) {
+						if (this.ordersByTable[i].orderId == orderId) {
+
 							this.ordersByTable.splice(i, 1);
 						}
 					}
 
-					
+
 					//websocket call
-		
+
 				}
 				else {
 					console.log("Problems Closing the order")
@@ -184,11 +243,14 @@ export class AppWaitressComponent implements OnInit {
 			menus: Object.values(this.menus),
 			server: this.server,
 			tableIndex: tableIndex,
-			orders : this.orders,
-			ordersByTable : this.ordersByTable
+			orders: this.orders,
+			ordersByTable: this.ordersByTable
 		}
+	}
 
+	formatDateTime(date): string {
 
+		return moment(date).format('MM/DD/YYYY hh:mm A');
 	}
 
 }

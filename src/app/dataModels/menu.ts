@@ -14,6 +14,7 @@ export class Menu {
 	menutype: string;
 	nutrition: Nutrition = new Nutrition();
 	reviews: Review = new Review();
+	images: any[] = [];
 }
 
 export class Price {

@@ -27,7 +27,7 @@
               <span class="h6">Review:</span>
               <textarea class="form-control mb-1" name="review" [(ngModel)]="k.menu.review"></textarea>
             </div>
-            <button type="submit" class="btn btn-primary pull-right" (click)="addReview(k.menuId, k.menu.rating, k.menu.review)">Add Review</button>
+            <button type="submit" class="btn btn-primary pull-right" (click)="addReview(k.menu['_id']['$oid'], k.menu.rating, k.menu.review)">Add Review</button>
           </div>
         </ng-template>
       </ngb-panel>

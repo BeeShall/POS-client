@@ -6,6 +6,8 @@ import { MenuService } from '../../../services/menu.service'
 import { NgForm } from '@angular/forms';
 import { Nutrition, DailyValues} from '../../../dataModels/nutrition';
 
+
+
 @Component({
 	selector: 'add-menu',
 	templateUrl: 'add-menu.component.html',
@@ -33,7 +35,21 @@ export class AddMenuComponent implements OnInit {
 	ngOnInit() {
 		if (this.newAdd) {
 			this.menu = new Menu();
+			
 		}
+	}
+
+	addImage(uploader){
+		let files = uploader.target.files;
+		for(let i = 0; i< files.length; i++ ){
+			this.menu.images.push(files[i])
+		}
+		console.log(files)
+		console.log(this.menu.images)
+	}
+
+	removeImage(index){
+		this.menu.images.splice(index,1)
 	}
 
 	submit() {

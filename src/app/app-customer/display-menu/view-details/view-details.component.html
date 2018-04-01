@@ -233,7 +233,7 @@
   <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
     <ngb-panel title="Reviews">
       <ng-template ngbPanelContent>
-        <div *ngFor="let review of menu.reviews " class="card p-2 container">
+        <div *ngFor="let review of menu.reviews " class="card p-2 mb-2 container">
           <div>
             <span class="h6">Rating: </span>
             <ngb-rating [(rate)]="review.rating" [readonly]="true"></ngb-rating>
