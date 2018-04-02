@@ -7,6 +7,14 @@
 <div class="modal-body m-0">
 
   <div class="container my-2">
+    <ngb-carousel *ngFor="let image of menu.images">
+      <ng-template ngbSlide>
+        <img [src]="image.url" alt="image.name">
+      </ng-template>
+    </ngb-carousel>
+  </div>
+
+  <div class="container my-2">
     <div class="card text-left p-2 mb-3">
       <div class="lead">
         <em>{{menu.description}} </em>

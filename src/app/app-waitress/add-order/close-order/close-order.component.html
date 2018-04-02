@@ -73,7 +73,7 @@
       <input type="number" class="form-control col-sm-6 m-1" name="tip" id="tip" [(ngModel)]="tip">
       <button type="button" class="btn btn-primary pull-right" (click)="addTip(tip)">Add tip</button>
     </div>
-    <ngb-alert *ngIf="alertEmailed" [type]="success" (close)="closeAlert(alert)">Successfully emailed receipt!</ngb-alert>
+    <ngb-alert *ngIf="alertEmailed" [type]="success" (close)="alertEmailed=False">Successfully emailed receipt!</ngb-alert>
     <label for="receipt-email">Email your Receipt: </label>
     <div class="input-group mb-3">
       <input type="email" class="form-control col-sm-6 mr-1" name="email" [(ngModel)]="email">

@@ -23,6 +23,7 @@ export class MenuComponent implements OnInit {
 		this.menuService.getAllMenu()
 			.subscribe(data=>{
 				this.menus = data["menus"]
+				console.log(this.menus)
 			})
 	 }
 

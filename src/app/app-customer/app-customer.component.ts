@@ -19,6 +19,8 @@ export class AppCustomerComponent implements OnInit {
 
 	activeOrders: Order[];
 
+	
+
 	constructor(config: NgbTabsetConfig,
 		private menuService: MenuService,
 		private customerService: CustomerService) {

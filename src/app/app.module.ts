@@ -25,6 +25,7 @@ import { WaitressService } from './services/waitress.service';
 import { MainPipeModule } from './pipes/main-pipe.module';
 import { CloseOrderComponent } from './app-waitress/add-order/close-order/close-order.component';
 import { AppWaitressModule } from './app-waitress/app-waitress.module';
+import { FileUploadService } from './services/fileUpload.service';
 
 
 @NgModule({
@@ -42,7 +43,7 @@ import { AppWaitressModule } from './app-waitress/app-waitress.module';
     NgbModule.forRoot(),
     MainPipeModule
   ],
-  providers: [AppService, MenuService, EmployeeService, CustomerService, SocketService, WaitressService],
+  providers: [AppService, MenuService, EmployeeService, CustomerService, SocketService, WaitressService, FileUploadService],
   entryComponents:[],
   bootstrap: [AppComponent]
 })

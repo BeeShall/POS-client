@@ -31,7 +31,7 @@ export class MenuService {
 	}
 
 	deleteMenu(id:string) : Observable<Menu>{
-		return this.http.delete(this.apiUrl+"deleteMenu/"+id, this.options)
+		return this.http.delete(this.apiUrl+"deleteMenu?menuId="+id, this.options)
 			.map((res:Response) => res.json());
 	}
 

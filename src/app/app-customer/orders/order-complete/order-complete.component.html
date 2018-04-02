@@ -6,7 +6,7 @@
 </div>
 <div class="modal-body m-0">
   <div class="card container mb-3 p-2">
-    <ngb-alert *ngIf="alertEmailed" [type]="success" (close)="closeAlert(alert)">Successfully emailed receipt!</ngb-alert>
+    <ngb-alert *ngIf="alertEmailed" [type]="success" (close)="alertEmailed=False">Successfully emailed receipt!</ngb-alert>
     <label for="receipt-email">Email your Receipt: </label>
     <div class="input-group mb-3">
       <input type="email" class="form-control col-sm-4 mr-1" name="email" [(ngModel)]="email">

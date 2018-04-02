@@ -13,7 +13,7 @@ export class Menu {
 	ingredients: string[] = [];
 	menutype: string;
 	nutrition: Nutrition = new Nutrition();
-	reviews: Review = new Review();
+	reviews: Review[] = [];
 	images: any[] = [];
 }
 

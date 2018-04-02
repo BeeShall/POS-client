@@ -22,7 +22,7 @@
           <button class="btn btn-info" (click)="viewDetails(menu)">View Details/Edit</button>
         </td>
         <td>
-          <button class="btn btn-danger" (click)="delete(menu.menuId, i)">Delete</button>
+          <button class="btn btn-danger" (click)="delete(menu['_id']['$oid'], i)">Delete</button>
         </td>
       </tr>
     </tbody>
