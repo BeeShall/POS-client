@@ -26,6 +26,9 @@ import { MainPipeModule } from './pipes/main-pipe.module';
 import { CloseOrderComponent } from './app-waitress/add-order/close-order/close-order.component';
 import { AppWaitressModule } from './app-waitress/app-waitress.module';
 import { FileUploadService } from './services/fileUpload.service';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
+const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
 
 
 @NgModule({
@@ -41,7 +44,8 @@ import { FileUploadService } from './services/fileUpload.service';
     AppCustomerModule,
     AppWaitressModule,
     NgbModule.forRoot(),
-    MainPipeModule
+    MainPipeModule,
+    SocketIoModule.forRoot(config) 
   ],
   providers: [AppService, MenuService, EmployeeService, CustomerService, SocketService, WaitressService, FileUploadService],
   entryComponents:[],

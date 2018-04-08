@@ -4,6 +4,7 @@ import { Menu, MenuType } from '../dataModels/menu';
 import { Order } from '../dataModels/order';
 import { MenuService } from '../services/menu.service';
 import { CustomerService } from '../services/customer.service';
+import { SocketService } from '../services/socket.service';
 
 @Component({
 	selector: 'app-customer',
@@ -23,7 +24,8 @@ export class AppCustomerComponent implements OnInit {
 
 	constructor(config: NgbTabsetConfig,
 		private menuService: MenuService,
-		private customerService: CustomerService) {
+		private customerService: CustomerService,
+		private socketService:SocketService) {
 		config.justify = 'center';
 		config.type = 'pills';
 
@@ -39,6 +41,10 @@ export class AppCustomerComponent implements OnInit {
 					console.log("Error fetching menus!")
 				}
 			})
+
+		this.socketService.join({
+			"staff": false,
+		})
 	}
 
 	sortMenus(menus) {

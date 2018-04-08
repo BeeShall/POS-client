@@ -28,6 +28,7 @@ export class AddOrderComponent implements OnInit {
 		console.log(this.data.menus[menuIndex])
 
 		let order = {
+			orderNo: this.data["ordersByTable"]["tableIndex"],
 			orderType: "WAITRESS",
 			menuId: this.data.menus[menuIndex]['_id']['$oid'],
 			date: moment().toISOString(),

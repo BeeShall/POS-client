@@ -53,13 +53,30 @@ export class AppWaitressComponent implements OnInit {
 			.subscribe(data => {
 				if (data["success"]) {
 					this.reservations = data["reservations"]
+					console.log(this.reservations)
+					if(this.reservations.length > 0){
 					this.setAlertForReminder()
+					}
 				}
 				else {
 					console.log("Database error in the server")
 				}
 			}, err => {
 				console.log("Error while fetching reservations!")
+			})
+
+			this.socketService.join({
+				"staff":true
+			})
+
+			this.socketService.getNewOrder().subscribe(data=>{
+				data = JSON.parse(data)
+				this.ordersByTable.push({
+					orderNo: data['orderNo'],
+					tableNo: data['tableNo'],
+					orderId: data['_id']['$oid'],
+					orders: []
+				});
 			})
 	}
 
