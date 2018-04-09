@@ -78,6 +78,70 @@ export class AppWaitressComponent implements OnInit {
 					orders: []
 				});
 			})
+
+
+
+			this.socketService.getUpdatedOrder("Completed Order")
+			.subscribe(data => {
+				let index = 0;
+				for(let i =0; i<this.ordersByTable.length; i++){
+					if(this.ordersByTable[i].orderId == data["orderNo"]){
+						index = i;
+						break;
+					}
+				}
+
+				this.ordersByTable.splice(index, 1);
+
+
+
+				for(let i=0; i<this.orders.length; i++){
+					if(this.orders[i].orderId == data["orderNo"]){
+						this.orders.splice(i,1)
+						i--;
+					}
+				}
+				
+			})
+
+			this.socketService.getUpdatedOrder("Order Added")
+			.subscribe(data => {
+				if (data["success"]) {
+					//find the orders
+					let tempOrders = data["data"]["orders"]
+					let ordersIndex = 0;
+					let index = 0
+
+					//find the index for ordersByTableList
+					for(let i =0; i<this.ordersByTable.length; i++){
+						if(this.ordersByTable[i].orderId == data["data"]["orderNo"]){
+							index = i;
+							break;
+						}
+					}
+
+					//find the respective menus for each order
+					for(let i =0; i<tempOrders.length; i++){
+						tempOrders[i]["menu"]=this.menus[tempOrders[i]["menuId"]]
+						this.orders.push({
+							orderNo: this.ordersByTable[index].orderNo,
+							orderId:  this.ordersByTable[index].orderId,
+							tableNo:  this.ordersByTable[index].tableNo,
+							quantity: tempOrders[i].quantity,
+							size: tempOrders[i].menu.prices[tempOrders[i].size].type,
+							server: tempOrders[i].server,
+							menu: tempOrders[i].menu
+						});
+					}
+
+					this.ordersByTable[index].orders.push(...tempOrders)
+				}
+				else {
+					console.log(data)
+				}
+			}
+			
+		)
 	}
 
 	setAlertForReminder() {
@@ -239,6 +303,13 @@ export class AppWaitressComponent implements OnInit {
 						if (this.ordersByTable[i].orderId == orderId) {
 
 							this.ordersByTable.splice(i, 1);
+						}
+					}
+
+					for(let i=0; i<this.orders.length; i++){
+						if(this.orders[i].orderId == orderId){
+							this.orders.splice(i,1)
+							i--;
 						}
 					}
 

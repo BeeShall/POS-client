@@ -24,21 +24,21 @@ export class SocketService {
 		this.socket.emit('addOrder', data)
 	}
 
-	closeOrder(data) {
-		this.socket.emit('closeOrder', data)
+	closeOrder() {
+		this.socket.emit('closeOrder')
 	}
 
 	cancelOrder(data) {
 		this.socket.emit('cancelOrder', data)
 	}
 
-	completeOrder(data) {
-		this.socket.emit('completeOrder', data)
+	completeOrder(orderNo) {
+		this.socket.emit('completeOrder', orderNo)
 	}
 
-	getUpdatedOrder() {
+	getUpdatedOrder(event) {
 		return new Observable<any>(observer => {
-			this.socket.on('join', (data) => {
+			this.socket.on(event, (data) => {
 			  observer.next(data);    
 			});
 			return () => {
@@ -46,6 +46,7 @@ export class SocketService {
 			};  
 		  })  
 	}
+
 
 
 	//this is only listened by the waitress for a new order on a new table

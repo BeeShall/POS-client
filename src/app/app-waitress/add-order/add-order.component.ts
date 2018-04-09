@@ -3,6 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Menu, MenuType } from '../../dataModels/menu';
 import { CustomerService } from '../../services/customer.service';
 import * as moment from 'moment';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
 	selector: 'add-order',
@@ -16,19 +17,22 @@ export class AddOrderComponent implements OnInit {
 
 	numbers = [];
 
+
 	public searchString: string;
 
 	constructor(public activeModal: NgbActiveModal,
-		private customerService: CustomerService) {
+		private customerService: CustomerService,
+		private socketService: SocketService) {
 		this.numbers = Array(5).fill(0).map((x, i) => i + 1);
 	}
 
+
+	ngOnInit() {
+	 }
+
 	addOrder(menuIndex, quantity, size) {
 
-		console.log(this.data.menus[menuIndex])
-
 		let order = {
-			orderNo: this.data["ordersByTable"]["tableIndex"],
 			orderType: "WAITRESS",
 			menuId: this.data.menus[menuIndex]['_id']['$oid'],
 			date: moment().toISOString(),
@@ -37,6 +41,11 @@ export class AddOrderComponent implements OnInit {
 			status: "PLACED"
 		}
 
+		let orderNo = this.data["ordersByTable"][this.data["tableIndex"]]["orderId"]
+
+		this.socketService.addOrder({"orderNo": orderNo, "orders":[order]})
+
+		/*
 		this.customerService.addOrders([order])
 			.subscribe(data => {
 				if (data["success"]) {
@@ -64,8 +73,8 @@ export class AddOrderComponent implements OnInit {
 					console.log(data)
 				}
 			})
+			*/
 
 	}
 
-	ngOnInit() { }
 }

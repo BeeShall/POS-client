@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import { CustomerService } from '../../services/customer.service';
 import { OrderCompleteComponent } from "./order-complete/order-complete.component";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
 	selector: 'orders',
@@ -25,8 +26,23 @@ export class OrdersComponent implements OnInit {
 
 	total: number;
 	constructor(private customerService: CustomerService,
-		private modalService: NgbModal) {
+		private modalService: NgbModal,
+		private socketService: SocketService) {
 		this.showCheckOut = true;
+	}
+
+	ngOnInit() {
+		this.socketService.getUpdatedOrder("Order Added")
+			.subscribe(data => {
+				console.log(data)
+				if (data["success"]) {
+					this.activeOrders.push(...this.pendingOrders)
+					this.pendingOrders.splice(0, this.pendingOrders.length);
+				}
+				else {
+					console.log(data)
+				}
+			})
 	}
 
 	addToActive() {
@@ -47,6 +63,10 @@ export class OrdersComponent implements OnInit {
 
 		console.log(orders)
 
+		this.socketService.addOrder({"orders":orders})
+
+
+		/*
 		this.customerService.addOrders(orders)
 			.subscribe(data => {
 				if (data["success"]) {
@@ -59,6 +79,7 @@ export class OrdersComponent implements OnInit {
 					console.log(data)
 				}
 			})
+			*/
 	}
 
 	removeOrder(i) {
@@ -90,6 +111,7 @@ export class OrdersComponent implements OnInit {
 	}
 
 	closeOrder() {
+		
 		this.customerService.closeOrder()
 			.subscribe(data => {
 				if (data["success"]) {
@@ -126,6 +148,7 @@ export class OrdersComponent implements OnInit {
 			.subscribe(data => {
 				if (data["success"]) {
 					console.log(reviewMenus)
+					this.socketService.completeOrder(data["orderId"])
 					const modalRef = this.modalService.open(OrderCompleteComponent, { size: "lg" });
 					modalRef.componentInstance.activeOrders = reviewMenus;
 					modalRef.componentInstance.orderId = data["orderId"]
@@ -135,5 +158,5 @@ export class OrdersComponent implements OnInit {
 
 	}
 
-	ngOnInit() { }
+
 }

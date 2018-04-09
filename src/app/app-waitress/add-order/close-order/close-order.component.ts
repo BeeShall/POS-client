@@ -28,6 +28,7 @@ export class CloseOrderComponent implements OnInit {
 
 	completePayment() {
 		let paymentData = {
+			orderNo: this.orderId,
 			tax: 0.14 * this.total,
 			tip: 0
 		}
