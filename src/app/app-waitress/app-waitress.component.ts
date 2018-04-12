@@ -10,6 +10,18 @@ import { CloseOrderComponent } from './add-order/close-order/close-order.compone
 import * as moment from 'moment';
 import { Observable } from 'rxjs/Observable'
 
+/*
+
+AppWaitressComponent
+
+DESCRIPTION: This is a component class for the waitress portal
+
+AUTHOR: BISHAL REGMI
+
+DATE: 2/28/2018
+
+*/
+
 @Component({
 	selector: 'app-waitress',
 	templateUrl: 'app-waitress.component.html',
@@ -18,12 +30,22 @@ import { Observable } from 'rxjs/Observable'
 
 export class AppWaitressComponent implements OnInit {
 
+	//list to hold all the orders for the list view
 	orders: any[] = [];
+
+	//object to hold all the menus keyed by their ids
 	menus = {};
+
+	//list of all the menu keys
 	menuKeys: string[] = [];
+
+	//list of all the orders based on their table for thr order by table view
 	ordersByTable = [];
+
+	//list of all the reservations
 	reservations = [];
 
+	//name of the server passed by reference
 	@Input()
 	server: string = "";
 
@@ -33,12 +55,19 @@ export class AppWaitressComponent implements OnInit {
 		private waitressService: WaitressService,
 		private menuService: MenuService,
 		private modalService: NgbModal) {
+
+		//config for the tabs setting 
 		config.justify = 'center';
 		config.type = 'pills';
+
+		//setting the default server for testing purpopses
+	
 		this.server = "BISHAL"
 	}
 
 	ngOnInit() {
+
+		//fetching all the menus from the database
 		this.menuService.getAllMenu()
 			.subscribe(data => {
 				if (data["success"]) {
@@ -49,11 +78,14 @@ export class AppWaitressComponent implements OnInit {
 				}
 			})
 
+		//fetching all the reservations from the database
 		this.waitressService.getReservations()
 			.subscribe(data => {
 				if (data["success"]) {
 					this.reservations = data["reservations"]
 					console.log(this.reservations)
+
+					//initializing the alerts
 					if(this.reservations.length > 0){
 					this.setAlertForReminder()
 					}
@@ -65,10 +97,12 @@ export class AppWaitressComponent implements OnInit {
 				console.log("Error while fetching reservations!")
 			})
 
+			//notifying the websocket to start a connection
 			this.socketService.join({
 				"staff":true
 			})
 
+			//listeing to the websocket for all the new orders
 			this.socketService.getNewOrder().subscribe(data=>{
 				data = JSON.parse(data)
 				this.ordersByTable.push({
@@ -80,7 +114,7 @@ export class AppWaitressComponent implements OnInit {
 			})
 
 
-
+			//listening to the websockets for all the completed order notifications
 			this.socketService.getUpdatedOrder("Completed Order")
 			.subscribe(data => {
 				let index = 0;
@@ -90,7 +124,8 @@ export class AppWaitressComponent implements OnInit {
 						break;
 					}
 				}
-
+				
+				//deleting the orders form the list of orders
 				this.ordersByTable.splice(index, 1);
 
 
@@ -103,7 +138,8 @@ export class AppWaitressComponent implements OnInit {
 				}
 				
 			})
-
+			
+			//listening to the websocket for all the added order notifications
 			this.socketService.getUpdatedOrder("Order Added")
 			.subscribe(data => {
 				if (data["success"]) {
@@ -144,6 +180,7 @@ export class AppWaitressComponent implements OnInit {
 		)
 	}
 
+	//this method is used to set alert for the next reservation
 	setAlertForReminder() {
 
 
@@ -175,6 +212,7 @@ export class AppWaitressComponent implements OnInit {
 
 	}
 
+	//this method is used to get the next earliest reservation
 	getEarliestReservationIndex() {
 
 		//get all the reservation within the next 30 mins
@@ -194,6 +232,10 @@ export class AppWaitressComponent implements OnInit {
 	}
 
 
+	//this method sorts the menu list fetched from the database such that
+		//1. They are easy to iterate thought HTML
+		//2. keyed on ids so that they are easy to refer later
+	//PARAMETERS: menus -> list of all the menus fetched from the database
 	sortMenus(menus) {
 
 		for (let menu of menus) {
@@ -202,6 +244,7 @@ export class AppWaitressComponent implements OnInit {
 		}
 
 
+		//getting all the orders that are in processing from the database
 		this.waitressService.getAllActiveOrders()
 			.subscribe(data => {
 				if (data["success"]) {
@@ -216,6 +259,8 @@ export class AppWaitressComponent implements OnInit {
 
 						let tableOrders = tempOrders[i].orders;
 						console.log(tableOrders)
+
+						//adding the orders to the list view
 						for (let j = 0; j < tableOrders.length; j++) {
 							tableOrders[j].menu = this.menus[tableOrders[j].menuId];
 							ordersArray.push(tableOrders[j]);
@@ -229,6 +274,9 @@ export class AppWaitressComponent implements OnInit {
 								menu: tableOrders[j].menu
 							});
 						}
+
+						//adding the orders to the orders by table
+						//data structure has been customized to make ot easy for iterating through HTML
 						this.ordersByTable.push({
 							orderNo: tempOrders[i].orderNo,
 							tableNo: tempOrders[i].tableNo,
@@ -251,13 +299,20 @@ export class AppWaitressComponent implements OnInit {
 		//modalRef.componentInstance.menu = menu;
 	}
 
+	//this method is used to cancel an order
+	//PARAMETERS:
+		//tableIndex: the index of the order in orders by table
+		//orderIndex: the index of the order in the orders list view
 	cancelOrder(tableIndex, OrderIndex) {
+
+		//canceling the order from the databse
 		this.waitressService.cancelOrder({ orderId: this.ordersByTable[tableIndex].orderId, cancelId: this.ordersByTable[tableIndex].orders[OrderIndex].date })
 			.subscribe(data => {
 				if (data["success"]) {
 					let orderMenu = this.ordersByTable[tableIndex].orders[OrderIndex].menu;
 					let orderNo = this.ordersByTable[tableIndex].orderNo;
 
+					//removing the orders locally
 					for (let i = 0; i < this.orders.length; i++) {
 						if (this.orders[i].orderNo == orderNo && this.orders[i].menu == orderMenu) {
 							this.orders.splice(i, 1)
@@ -277,6 +332,10 @@ export class AppWaitressComponent implements OnInit {
 			})
 	}
 
+	//this method is used to close the order
+	//PARAMETERS:
+		//orderId: id of the order to delete
+		//orders: the order to close
 	closeOrder(orderId, orders) {
 
 		console.log("orderId", orderId)
@@ -288,17 +347,19 @@ export class AppWaitressComponent implements OnInit {
 
 					let total = 0
 
+					//calculate the total of all orders
 					for (let i = 0; i < orders.length; i++) {
 						let price = orders[i].menu.prices[orders[i].size].price
 						total += orders[i].quantity * price
 					}
 
+					//open a model for completing the payment
 					const modalRef = this.modalService.open(CloseOrderComponent);
 					modalRef.componentInstance.orderId = orderId;
 					modalRef.componentInstance.total = total
 
 
-
+					//remove the order lcoally
 					for (let i = 0; i < this.ordersByTable.length; i++) {
 						if (this.ordersByTable[i].orderId == orderId) {
 
@@ -313,9 +374,6 @@ export class AppWaitressComponent implements OnInit {
 						}
 					}
 
-
-					//websocket call
-
 				}
 				else {
 					console.log("Problems Closing the order")
@@ -324,8 +382,11 @@ export class AppWaitressComponent implements OnInit {
 
 	}
 
+	//this method is to add an order for the specific table
+	//PARAMETERS: tableInde: index for the orders by table array
 	addOrder(tableIndex) {
 
+		//open the addo order modal component
 		const modalRef = this.modalService.open(AddOrderComponent);
 		modalRef.componentInstance.data = {
 			menus: Object.values(this.menus),
@@ -336,6 +397,7 @@ export class AppWaitressComponent implements OnInit {
 		}
 	}
 
+	//this method is a utility function to format the time to a readable format
 	formatDateTime(date): string {
 
 		return moment(date).format('MM/DD/YYYY hh:mm A');

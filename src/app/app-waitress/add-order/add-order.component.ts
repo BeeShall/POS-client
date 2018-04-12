@@ -5,6 +5,17 @@ import { CustomerService } from '../../services/customer.service';
 import * as moment from 'moment';
 import { SocketService } from '../../services/socket.service';
 
+/*
+AddOrderComponent
+
+DESCRIPTION: This is a component class for the adding an order from waitress portal
+
+AUTHOR: BISHAL REGMI
+
+DATE: 2/28/2018
+
+*/
+
 @Component({
 	selector: 'add-order',
 	templateUrl: 'add-order.component.html'
@@ -12,12 +23,24 @@ import { SocketService } from '../../services/socket.service';
 
 export class AddOrderComponent implements OnInit {
 
+	/*
+	Data structure:
+	{
+		menus
+		server
+		tableIndex
+		orders
+		ordersByTable
+	}
+	*/
+	//object containing all the parameters passed by refernce to the modal
 	@Input()
 	data: any;
 
+	//list of template numbers for quantity
 	numbers = [];
 
-
+	//the string to serach for filter
 	public searchString: string;
 
 	constructor(public activeModal: NgbActiveModal,
@@ -30,8 +53,15 @@ export class AddOrderComponent implements OnInit {
 	ngOnInit() {
 	 }
 
+	 //this method is used to add an order to a table/customer
+	 //PARAMETERS:
+		 //menuIndex: index of the menu to add
+		 //quantity: number of item
+		 //size: size of the menu to add
 	addOrder(menuIndex, quantity, size) {
 
+		//temp structure to post to the databse for order
+		//should match the structure in the databse
 		let order = {
 			orderType: "WAITRESS",
 			menuId: this.data.menus[menuIndex]['_id']['$oid'],
@@ -43,6 +73,7 @@ export class AddOrderComponent implements OnInit {
 
 		let orderNo = this.data["ordersByTable"][this.data["tableIndex"]]["orderId"]
 
+		//websocket push to add order
 		this.socketService.addOrder({"orderNo": orderNo, "orders":[order]})
 
 		/*
