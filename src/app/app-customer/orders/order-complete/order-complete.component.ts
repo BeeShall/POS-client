@@ -4,6 +4,19 @@ import { Order } from '../../../dataModels/order';
 import { NgForm } from '@angular/forms';
 import { CustomerService } from '../../../services/customer.service';
 
+/*
+
+OrderCompleteComponent
+
+DESCRIPTION: This is a component class for the modal that displays after the payment has been complete
+				This modal allows user to email a receipt and provide reviews for the food
+
+AUTHOR: BISHAL REGMI
+
+DATE: 2/28/2018
+
+*/
+
 @Component({
 	selector: 'order-complete',
 	templateUrl: 'order-complete.component.html'
@@ -11,11 +24,10 @@ import { CustomerService } from '../../../services/customer.service';
 
 export class OrderCompleteComponent implements OnInit {
 
+	//used to show alert for email sent
 	alertEmailed: boolean;
 
-	@Input()
-	activeOrders: Order[];
-
+	//order id for the cusromer passed by reference
 	@Input()
 	orderId : string;
 	
@@ -24,7 +36,14 @@ export class OrderCompleteComponent implements OnInit {
 		this.alertEmailed = false
 	}
 
+	//this method adds the reviews to the specifc menu among the ones user ordered
+	//PARAMETERS:
+		//menuId: id of the menu being reviewd
+		//rating: rating as integer for the menu
+		//review: revies as string for the menu
 	addReview(menuId, rating, review){
+
+		//creating POST JSON data for the review
 		let data = {
 			menuId :menuId,
 			review: {
@@ -33,6 +52,7 @@ export class OrderCompleteComponent implements OnInit {
 			}
 		}
 
+		//posting rhe review to the server
 		this.customerService.addReview(data)
 			.subscribe(data => {
 				if(data["success"]){
@@ -45,6 +65,8 @@ export class OrderCompleteComponent implements OnInit {
 
 	}
 
+	//this method is used to email a receript to the customer
+	//PARAMETERS: email -> email address for the receipt to be mailed at
 	emailReceipt(email){
 		let data = {
 			orderId: this.orderId,

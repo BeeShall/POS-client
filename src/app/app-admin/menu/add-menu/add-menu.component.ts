@@ -7,6 +7,17 @@ import { NgForm } from '@angular/forms';
 import { Nutrition, DailyValues } from '../../../dataModels/nutrition';
 import { FileUploadService } from '../../../services/fileUpload.service';
 
+/*
+
+AddMenuComponent
+
+DESCRIPTION: This is a component class for the modal for adding menu
+
+AUTHOR: BISHAL REGMI
+
+DATE: 2/28/2018
+
+*/
 
 
 @Component({
@@ -17,19 +28,28 @@ import { FileUploadService } from '../../../services/fileUpload.service';
 
 export class AddMenuComponent implements OnInit {
 
+	//list of all the types of menu possible
 	menuTypes = MenuType;
+
+	//list of all the sizes available
 	sizeList = SizeList;
+
+	//list of all the daily values for the nutrition
 	dailyValues = DailyValues;
 
+	//list of all the menus passed from the menu component
 	@Input()
 	menus: Menu[];
 
+	//to indicated if a new menu is being added
 	@Input()
 	newAdd: boolean;
 
+	//if an old menu is being updated, the menu is passed here
 	@Input()
 	menu: Menu;
 
+	//list of all the images for the menu
 	images: any;
 
 	constructor(public activeModal: NgbActiveModal,
@@ -38,6 +58,7 @@ export class AddMenuComponent implements OnInit {
 
 	ngOnInit() {
 		if (this.newAdd) {
+			//if a new menu is being added, initialize everything to empty
 			this.menu = new Menu();
 			this.images = []
 		}
@@ -46,6 +67,7 @@ export class AddMenuComponent implements OnInit {
 		}
 	}
 
+	//this method is used to add image to the list of images
 	addImage(uploader) {
 		let files = uploader.target.files;
 		for (let i = 0; i < files.length; i++) {
@@ -55,17 +77,22 @@ export class AddMenuComponent implements OnInit {
 		console.log(this.images)
 	}
 
+	//this method is used to remove the images 
 	removeImage(index) {
 		//remove from firebase as well
 		this.images.splice(index, 1)
 
 	}
 
+	//this method is used to commit the images to firebase and 
+	//submit all the menu data to the databse
 	submit() {
 		console.log(this.menu);
 		console.log(this.images)
 
 
+		//uploading images to the firebase
+		//and generating the URL for each image
 		for (let i = 0; i < this.images.length; i++) {
 			this.fileUploadService.pushUpload(this.images[i])
 			let data = {
@@ -79,8 +106,9 @@ export class AddMenuComponent implements OnInit {
 		}
 
 		//add pictures
-
+		//if new menu is being added
 		if (this.newAdd) {
+			//add the menus and picture URLS to the databse
 			this.menuService.addMenu(this.menu)
 				.subscribe(data => {
 					if (data["success"]) {
@@ -95,6 +123,7 @@ export class AddMenuComponent implements OnInit {
 					}
 				})
 		}
+		//if a menu is being updated
 		else {
 			this.menuService.updateMenu(this.menu)
 				.subscribe(data => {
